@@ -28,7 +28,8 @@ class BinomPublishPlugin : Plugin<Project> {
         if (signApply) {
             println("Sign enabled")
             target.apply {
-                it.plugin("org.gradle.signing")
+//                it.plugin("org.gradle.signing")
+                it.plugin("signing")
             }
         } else {
             println("Sign disabled")
