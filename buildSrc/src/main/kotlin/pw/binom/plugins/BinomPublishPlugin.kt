@@ -102,5 +102,10 @@ class BinomPublishPlugin : Plugin<Project> {
                 }
             }
         }
+
+        println("All tasks:")
+        target.tasks.forEach {
+            println("=>${it.name}")
+        }
     }
 }
