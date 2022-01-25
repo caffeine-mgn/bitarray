@@ -63,7 +63,7 @@ class BinomPublishPlugin : Plugin<Project> {
             if (centralUserName != null && centralPassword != null) {
                 it.maven {
                     it.name = "Central"
-                    it.url = URI("https://oss.sonatype.org/service/local/staging/deploy/maven2")
+                    it.url = URI("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2")
                     it.credentials {
                         it.username = centralUserName
                         it.password = centralPassword
