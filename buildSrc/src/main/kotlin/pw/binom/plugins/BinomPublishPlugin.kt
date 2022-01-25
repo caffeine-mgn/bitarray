@@ -22,11 +22,16 @@ class BinomPublishPlugin : Plugin<Project> {
         val gpgKeyId = target.propertyOrNull("binom.gpg.key_id")
         val gpgPassword = target.propertyOrNull("binom.gpg.password")
         val gpgPrivateKey = target.propertyOrNull("binom.gpg.private_key")
+        val centralUserName = target.propertyOrNull("binom.central.username")
+        val centralPassword = target.propertyOrNull("binom.central.password")
         val signApply = gpgKeyId != null && gpgPassword != null && gpgPrivateKey != null
         if (signApply) {
+            println("Sign enabled")
             target.apply {
                 it.plugin("org.gradle.signing")
             }
+        } else {
+            println("Sign disabled")
         }
         if (!target.hasProperty(BINOM_REPO_URL)) {
             logger.warning("Property [$BINOM_REPO_URL] not found publication plugin will not apply")
@@ -53,6 +58,16 @@ class BinomPublishPlugin : Plugin<Project> {
                 it.credentials {
                     it.username = target.property(BINOM_REPO_USER) as String
                     it.password = target.property(BINOM_REPO_PASSWORD) as String
+                }
+            }
+            if (centralUserName != null && centralPassword != null) {
+                it.maven {
+                    it.name = "Central"
+                    it.url = URI("https://oss.sonatype.org/service/local/staging/deploy/maven2")
+                    it.credentials {
+                        it.username = centralUserName
+                        it.password = centralPassword
+                    }
                 }
             }
         }
