@@ -5,6 +5,7 @@ import kotlin.jvm.JvmInline
 
 @JvmInline
 value class BytesBitArray(val data: ByteArray) : BitArray {
+    constructor(byteSize: Int) : this(ByteArray(byteSize))
 
     override operator fun get(index: Int): Boolean {
         val value = data[index / Byte.SIZE_BITS]
@@ -112,6 +113,11 @@ value class BytesBitArray(val data: ByteArray) : BitArray {
         return sb.toString()
     }
 }
+
+/**
+ * Creates and return [BytesBitArray] using this array as data.
+ */
+fun ByteArray.toBitset() = BytesBitArray(this)
 
 private fun Byte.toBitsetString(sb2: StringBuilder = StringBuilder()): String {
     repeat(Byte.SIZE_BITS) { index ->

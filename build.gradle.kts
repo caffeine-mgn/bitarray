@@ -1,15 +1,12 @@
 plugins {
     id("org.jetbrains.kotlin.multiplatform")
     id("org.jmailen.kotlinter")
-//    id("com.android.library")
-//    id("com.quittle.setup-android-sdk") version "2.1.0"
 }
 
 apply<pw.binom.plugins.BinomPublishPlugin>()
 val jsRun = System.getProperty("jsrun") != null
 kotlin {
     jvm()
-//    android()
     linuxX64()
     linuxArm32Hfp()
     linuxArm64()
@@ -121,9 +118,6 @@ allprojects {
         google()
     }
 }
-//android {
-//    compileSdk = 26
-//}
 kotlinter {
     indentSize = 4
     disabledRules = arrayOf("no-wildcard-imports")

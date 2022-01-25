@@ -49,13 +49,13 @@ value class BitArray32(val value: Int = 0) : BitArray {
     override fun toString(): String = value.toBitsetString()
 }
 
-fun Int.toBitset32() = BitArray32(this)
+fun Int.toBitset() = BitArray32(this)
 
 /**
  * Returns int as bit set string. Example:
  * value = 0b00110100, result=00000000000000000000000000110100
  */
-fun Int.toBitsetString(): String {
+private fun Int.toBitsetString(): String {
     val leftPart = toUInt().toString(2)
     var len = MAX_BITS - leftPart.length
     val sb = StringBuilder()

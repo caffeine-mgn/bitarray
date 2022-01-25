@@ -50,13 +50,13 @@ value class BitArray64(val value: Long = 0) : BitArray {
     override fun toString(): String = value.toBitsetString()
 }
 
-fun Long.toBitset64() = BitArray64(this)
+fun Long.toBitset() = BitArray64(this)
 
 /**
  * Returns int as bit set string. Example:
  * value = 0b00110100, result=00000000000000000000000000110100
  */
-fun Long.toBitsetString(): String {
+private fun Long.toBitsetString(): String {
     val leftPart = toULong().toString(2)
     var len = MAX_BITS - leftPart.length
     val sb = StringBuilder()
