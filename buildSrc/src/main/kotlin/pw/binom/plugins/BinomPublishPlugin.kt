@@ -103,9 +103,12 @@ class BinomPublishPlugin : Plugin<Project> {
             }
         }
         if (signApply) {
+            println("Try configure GPG key for sign")
             target.extensions.configure(SigningExtension::class.java) {
+                println("Configuring GPG key...")
                 it.useInMemoryPgpKeys(gpgKeyId, gpgPrivateKey, gpgPassword)
                 it.sign(publishing.publications)
+                println("Publications configured with GPG key!")
             }
         } else {
             logger.warning("gpg configuration missing. Jar will be publish without sign")
