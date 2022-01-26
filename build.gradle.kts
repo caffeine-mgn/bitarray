@@ -3,7 +3,7 @@ plugins {
     id("org.jmailen.kotlinter")
 }
 
-apply<pw.binom.plugins.BinomPublishPlugin>()
+
 val jsRun = System.getProperty("jsrun") != null
 kotlin {
     jvm()
@@ -122,4 +122,5 @@ kotlinter {
     indentSize = 4
     disabledRules = arrayOf("no-wildcard-imports")
 }
+apply<pw.binom.plugins.BinomPublishPlugin>()
 apply<pw.binom.plugins.DocsPlugin>()

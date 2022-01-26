@@ -109,6 +109,11 @@ class BinomPublishPlugin : Plugin<Project> {
                 it.useInMemoryPgpKeys(gpgKeyId, gpgPrivateKey, gpgPassword)
                 it.sign(publishing.publications)
                 println("Publications configured with GPG key!")
+
+                println("Publications:")
+                publishing.publications.forEach {
+                    println("=>${it.name}")
+                }
             }
         } else {
             logger.warning("gpg configuration missing. Jar will be publish without sign")
