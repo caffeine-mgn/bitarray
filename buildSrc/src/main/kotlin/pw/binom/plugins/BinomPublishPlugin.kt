@@ -73,14 +73,14 @@ class BinomPublishPlugin : Plugin<Project> {
             }
         }
 
-        if (signApply) {
-            target.extensions.configure(SigningExtension::class.java) {
-                it.useInMemoryPgpKeys(gpgKeyId, gpgPrivateKey, gpgPassword)
-                it.sign(publishing.publications)
-            }
-        } else {
-            logger.warning("gpg configuration missing. Jar will be publish without sign")
-        }
+//        if (signApply) {
+//            target.extensions.configure(SigningExtension::class.java) {
+//                it.useInMemoryPgpKeys(gpgKeyId, gpgPrivateKey, gpgPassword)
+//                it.sign(publishing.publications)
+//            }
+//        } else {
+//            logger.warning("gpg configuration missing. Jar will be publish without sign")
+//        }
         publishing.publications.withType(MavenPublication::class.java) {
             it.pom {
                 it.scm {
@@ -102,10 +102,13 @@ class BinomPublishPlugin : Plugin<Project> {
                 }
             }
         }
-
-        println("All tasks:")
-        target.tasks.forEach {
-            println("=>${it.name}")
+        if (signApply) {
+            target.extensions.configure(SigningExtension::class.java) {
+                it.useInMemoryPgpKeys(gpgKeyId, gpgPrivateKey, gpgPassword)
+                it.sign(publishing.publications)
+            }
+        } else {
+            logger.warning("gpg configuration missing. Jar will be publish without sign")
         }
     }
 }
