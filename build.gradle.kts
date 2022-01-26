@@ -1,8 +1,9 @@
+import pw.binom.getGitBranch
+
 plugins {
     id("org.jetbrains.kotlin.multiplatform")
     id("org.jmailen.kotlinter")
 }
-
 
 val jsRun = System.getProperty("jsrun") != null
 kotlin {
@@ -109,7 +110,11 @@ kotlin {
 }
 
 allprojects {
-    version = pw.binom.Versions.LIB_VERSION
+    val branch = getGitBranch()
+    version = if (branch == "main" || branch == "master")
+        pw.binom.Versions.LIB_VERSION
+    else
+        "${pw.binom.Versions.LIB_VERSION}-SNAPSHOT"
     group = "pw.binom"
 
     repositories {

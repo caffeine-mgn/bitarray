@@ -4,6 +4,7 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.publish.PublishingExtension
 import org.gradle.api.publish.maven.MavenPublication
+import org.gradle.api.publish.maven.tasks.PublishToMavenRepository
 import org.gradle.plugins.signing.SigningExtension
 import java.net.URI
 import java.util.logging.Logger
@@ -64,7 +65,11 @@ class BinomPublishPlugin : Plugin<Project> {
             if (centralUserName != null && centralPassword != null) {
                 it.maven {
                     it.name = "Central"
-                    it.url = URI("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2")
+                    val url = if ((target.version as String).endsWith("-SNAPSHOT"))
+                        "https://s01.oss.sonatype.org/content/repositories/snapshots"
+                    else
+                        "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2"
+                    it.url = URI(url)
                     it.credentials {
                         it.username = centralUserName
                         it.password = centralPassword
@@ -109,7 +114,7 @@ class BinomPublishPlugin : Plugin<Project> {
                 it.useInMemoryPgpKeys(gpgKeyId, gpgPrivateKey, gpgPassword)
                 it.sign(publishing.publications)
                 println("Publications configured with GPG key!")
-
+                it.setRequired(target.tasks.filterIsInstance<PublishToMavenRepository>())
                 println("Publications:")
                 publishing.publications.forEach {
                     println("=>${it.name}")
