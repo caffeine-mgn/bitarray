@@ -1,7 +1,6 @@
 plugins {
     id("org.jetbrains.kotlin.multiplatform")
     id("org.jmailen.kotlinter")
-    id("com.dorongold.task-tree") version "2.1.0"
 }
 
 apply<pw.binom.plugins.BinomPublishPlugin>()
