@@ -112,6 +112,13 @@ value class BytesBitArray(val data: ByteArray) : BitArray {
         }
         return sb.toString()
     }
+
+    override fun iterator() = object : BitArrayListIterator(0) {
+        override val size: Int
+            get() = data.size * 8
+
+        override fun get(index: Int): Boolean = this@BytesBitArray[index]
+    }
 }
 
 /**

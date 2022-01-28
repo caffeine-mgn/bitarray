@@ -20,6 +20,17 @@ value class BitArray64(val value: Long = 0) : BitArray {
     override val size: Int
         get() = MAX_BITS
 
+    override fun full(value: Boolean, startIndex: Int, endIndex: Int): BitArray64 {
+        if (startIndex == 0 && endIndex >= Long.SIZE_BITS - 1) {
+            val numberValue = when (value) {
+                true -> 0xFFFFFFFFFFFFFFFFuL.toLong()
+                false -> 0L
+            }
+            return BitArray64(numberValue)
+        }
+        return super.full(value, startIndex, endIndex) as BitArray64
+    }
+
     override operator fun get(index: Int): Boolean = value and (1L shl (MAX_BITS_1 - index)) != 0L
     override fun update(index: Int, value: Boolean) =
         BitArray64(
@@ -48,6 +59,12 @@ value class BitArray64(val value: Long = 0) : BitArray {
      * Returns value as unsigned int in radix 2
      */
     override fun toString(): String = value.toBitsetString()
+    override fun iterator() = object : BitArrayListIterator(0) {
+        override val size: Int
+            get() = 64
+
+        override fun get(index: Int): Boolean = this@BitArray64[index]
+    }
 }
 
 fun Long.toBitset() = BitArray64(this)

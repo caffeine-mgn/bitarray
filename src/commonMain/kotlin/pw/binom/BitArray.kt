@@ -1,6 +1,6 @@
 package pw.binom
 
-sealed interface BitArray {
+sealed interface BitArray : Iterable<Boolean> {
     val size: Int
     val lastIndex: Int
         get() = size - 1

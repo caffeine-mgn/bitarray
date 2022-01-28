@@ -20,6 +20,17 @@ value class BitArray32(val value: Int = 0) : BitArray {
     override val size: Int
         get() = 32
 
+    override fun full(value: Boolean, startIndex: Int, endIndex: Int): BitArray32 {
+        if (startIndex == 0 && endIndex >= Int.SIZE_BITS - 1) {
+            val numberValue = when (value) {
+                true -> 0xFFFFFFFFu.toInt()
+                false -> 0
+            }
+            return BitArray32(numberValue)
+        }
+        return super.full(value, startIndex, endIndex) as BitArray32
+    }
+
     override operator fun get(index: Int): Boolean = value and (1 shl (MAX_BITS_1 - index)) != 0
     override fun update(index: Int, value: Boolean) =
         BitArray32(
@@ -47,6 +58,13 @@ value class BitArray32(val value: Int = 0) : BitArray {
      * Returns value as unsigned int in radix 2
      */
     override fun toString(): String = value.toBitsetString()
+
+    override fun iterator() = object : BitArrayListIterator(0) {
+        override val size: Int
+            get() = 32
+
+        override fun get(index: Int): Boolean = this@BitArray32[index]
+    }
 }
 
 fun Int.toBitset() = BitArray32(this)
