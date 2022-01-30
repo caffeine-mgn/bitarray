@@ -110,7 +110,7 @@ class BinomPublishPlugin : Plugin<Project> {
         if (signApply) {
             println("Try configure GPG key for sign")
             target.extensions.configure(SigningExtension::class.java) {
-                println("Configuring GPG key... ${gpgKeyId.hashCode().toUInt().toString(16)}  ${gpgPrivateKey.hashCode().toUInt().toString(16)}  ${gpgPassword.hashCode().toUInt().toString(16)}")
+                println("Configuring GPG key... ${gpgKeyId.hashCode().toUInt().toString(16)}  ${gpgPrivateKey!!.trim().hashCode().toUInt().toString(16)}  ${gpgPassword.hashCode().toUInt().toString(16)}")
                 it.useInMemoryPgpKeys(gpgKeyId, gpgPrivateKey, gpgPassword)
                 it.sign(publishing.publications)
                 println("Publications configured with GPG key!")
