@@ -22,7 +22,7 @@ class BinomPublishPlugin : Plugin<Project> {
 
         val gpgKeyId = target.propertyOrNull("binom.gpg.key_id")
         val gpgPassword = target.propertyOrNull("binom.gpg.password")
-        val gpgPrivateKey = target.propertyOrNull("binom.gpg.private_key")
+        val gpgPrivateKey = target.propertyOrNull("binom.gpg.private_key")?.replace("|", "\n")
         val centralUserName = target.propertyOrNull("binom.central.username")
         val centralPassword = target.propertyOrNull("binom.central.password")
         val signApply = gpgKeyId != null && gpgPassword != null && gpgPrivateKey != null
@@ -117,7 +117,7 @@ class BinomPublishPlugin : Plugin<Project> {
                 )
                 println("privateKey:\n")
                 gpgPrivateKey.lines().forEach {
-                    println("->>\"${it.toCharArray().joinToString("_")}\"")
+                    println("->>\"${it/*.toCharArray().joinToString("_")*/}\"")
                 }
                 it.useInMemoryPgpKeys(gpgKeyId, gpgPrivateKey, gpgPassword)
                 it.sign(publishing.publications)
