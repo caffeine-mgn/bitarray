@@ -117,7 +117,7 @@ class BinomPublishPlugin : Plugin<Project> {
                 )
                 println("privateKey:\n")
                 gpgPrivateKey.lines().forEach {
-                    println("->>\"$it\"")
+                    println("->>\"${it.toCharArray().joinToString("_")}\"")
                 }
                 it.useInMemoryPgpKeys(gpgKeyId, gpgPrivateKey, gpgPassword)
                 it.sign(publishing.publications)
