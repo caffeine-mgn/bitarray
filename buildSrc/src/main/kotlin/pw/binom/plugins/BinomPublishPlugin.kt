@@ -78,14 +78,6 @@ class BinomPublishPlugin : Plugin<Project> {
             }
         }
 
-//        if (signApply) {
-//            target.extensions.configure(SigningExtension::class.java) {
-//                it.useInMemoryPgpKeys(gpgKeyId, gpgPrivateKey, gpgPassword)
-//                it.sign(publishing.publications)
-//            }
-//        } else {
-//            logger.warning("gpg configuration missing. Jar will be publish without sign")
-//        }
         publishing.publications.withType(MavenPublication::class.java) {
             it.pom {
                 it.scm {
@@ -108,25 +100,10 @@ class BinomPublishPlugin : Plugin<Project> {
             }
         }
         if (signApply) {
-            println("Try configure GPG key for sign")
             target.extensions.configure(SigningExtension::class.java) {
-                println(
-                    "Configuring GPG key... ${gpgKeyId.hashCode().toUInt().toString(16)}  ${
-                    gpgPrivateKey!!.trim().hashCode().toUInt().toString(16)
-                    }  ${gpgPassword.hashCode().toUInt().toString(16)}"
-                )
-                println("privateKey:\n")
-                gpgPrivateKey.lines().forEach {
-                    println("->>\"${it/*.toCharArray().joinToString("_")*/}\"")
-                }
                 it.useInMemoryPgpKeys(gpgKeyId, gpgPrivateKey, gpgPassword)
                 it.sign(publishing.publications)
-                println("Publications configured with GPG key!")
                 it.setRequired(target.tasks.filterIsInstance<PublishToMavenRepository>())
-                println("Publications:")
-                publishing.publications.forEach {
-                    println("=>${it.name}")
-                }
             }
         } else {
             logger.warning("gpg configuration missing. Jar will be publish without sign")
