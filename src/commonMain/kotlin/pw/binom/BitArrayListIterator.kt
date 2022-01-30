@@ -17,7 +17,7 @@ abstract class BitArrayListIterator(private var cursor: Int) : ListIterator<Bool
     override fun nextIndex(): Int = cursor + 1
 
     override fun previous(): Boolean {
-        if (!hasPrevious()){
+        if (!hasPrevious()) {
             throw NoSuchElementException()
         }
         return get(cursor--)
