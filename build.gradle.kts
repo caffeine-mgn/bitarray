@@ -51,15 +51,15 @@ kotlin {
             js(BOTH) {
                 browser {
                     browser {
-                        testTask {
-                            if (!applled) {
-                                applled = true
-                                useKarma {
-                                    useChromiumHeadless()
-//                                useFirefoxHeadless()
-                                }
-                            }
-                        }
+//                        testTask {
+//                            if (!applled) {
+//                                applled = true
+//                                useKarma {
+//                                    useChromiumHeadless()
+////                                useFirefoxHeadless()
+//                                }
+//                            }
+//                        }
                     }
                 }
                 nodejs()
