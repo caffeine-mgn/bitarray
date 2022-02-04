@@ -39,6 +39,7 @@ value class BitArray64(val value: Long = 0) : BitArray {
             else
                 (this.value.inv() or (1L shl MAX_BITS_1 - index)).inv()
         )
+    override fun inverted(): BitArray64 = BitArray64(value.inv())
 
     fun toLong() = value
     fun toULong() = toLong().toULong()

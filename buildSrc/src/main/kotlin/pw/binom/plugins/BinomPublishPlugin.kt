@@ -81,8 +81,8 @@ class BinomPublishPlugin : Plugin<Project> {
         publishing.publications.withType(MavenPublication::class.java) {
             it.pom {
                 it.scm {
-                    it.connection.set("https://github.com/caffeine-mgn/pw.binom.io.git")
-                    it.url.set("https://github.com/caffeine-mgn/pw.binom.io")
+                    it.connection.set(PublishInfo.GIT_PATH_TO_PROJECT)
+                    it.url.set(PublishInfo.HTTP_PATH_TO_PROJECT)
                 }
                 it.developers {
                     it.developer {

@@ -8,6 +8,7 @@ sealed interface BitArray : Iterable<Boolean> {
     operator fun get(index: Int): Boolean
     fun update(index: Int, value: Boolean): BitArray
     fun toByteArray() = BooleanArray(size) { this[it] }
+    fun inverted(): BitArray
     fun full(value: Boolean, startIndex: Int = 0, endIndex: Int = lastIndex): BitArray {
         var e = this
         for (i in startIndex..lastIndex) {

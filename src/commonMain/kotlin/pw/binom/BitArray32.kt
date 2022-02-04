@@ -40,6 +40,8 @@ value class BitArray32(val value: Int = 0) : BitArray {
                 (this.value.inv() or (1 shl MAX_BITS_1 - index)).inv()
         )
 
+    override fun inverted(): BitArray32 = BitArray32(value.inv())
+
     fun toInt() = value
     fun toUInt() = toInt().toUInt()
     override fun getByte4(index: Int) = ((value ushr (MAX_BITS - 4 - index)) and 0xF).toByte()

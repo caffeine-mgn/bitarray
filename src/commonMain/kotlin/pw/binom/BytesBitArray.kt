@@ -1,6 +1,7 @@
 package pw.binom
 
 import kotlin.experimental.and
+import kotlin.experimental.inv
 import kotlin.jvm.JvmInline
 
 @JvmInline
@@ -17,6 +18,13 @@ value class BytesBitArray(val data: ByteArray) : BitArray {
         val result = BytesBitArray(data.copyOf())
         result[index] = value
         return result
+    }
+
+    override fun inverted() = BytesBitArray(ByteArray(data.size) { data[it].inv() })
+    fun invert() {
+        for (it in data.indices) {
+            data[it] = data[it].inv()
+        }
     }
 
     override fun getByte4(index: Int): Byte {
