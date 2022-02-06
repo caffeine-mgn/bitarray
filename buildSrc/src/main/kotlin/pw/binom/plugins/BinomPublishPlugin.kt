@@ -115,12 +115,17 @@ class BinomPublishPlugin : Plugin<Project> {
         } else {
             logger.warning("gpg configuration missing. Jar will be publish without sign")
         }
+        target.tasks.withType(PublishToMavenRepository::class.java) {
+            it.enabled = isPublicationSupport(it.publication.name)
+        }
     }
 
     private fun isPublicationSupport(publicationName: String): Boolean =
         if (isMac) {
             when (publicationName) {
-                "macosX64", "macosArm64", "ios",
+                "macosX64",
+                "macosArm64",
+                "ios",
                 "iosArm32",
                 "iosArm64",
                 "iosSimulatorArm64",
