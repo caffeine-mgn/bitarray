@@ -1,11 +1,12 @@
 import pw.binom.getGitBranch
-
+import org.apache.tools.ant.taskdefs.condition.Os
 plugins {
     id("org.jetbrains.kotlin.multiplatform")
     id("org.jmailen.kotlinter")
 }
 
 val jsRun = System.getProperty("jsrun") != null
+
 kotlin {
     jvm()
     linuxX64()
@@ -56,7 +57,7 @@ kotlin {
 //                                applled = true
 //                                useKarma {
 //                                    useChromiumHeadless()
-////                                useFirefoxHeadless()
+// //                                useFirefoxHeadless()
 //                                }
 //                            }
 //                        }

@@ -1,5 +1,6 @@
 package pw.binom.plugins
 
+import org.apache.tools.ant.taskdefs.condition.Os
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.publish.PublishingExtension
@@ -15,7 +16,7 @@ const val BINOM_REPO_PASSWORD = "binom.repo.password"
 
 private fun Project.propertyOrNull(property: String) =
     if (hasProperty(property)) property(property) as String else null
-
+val isMac = Os.isFamily(Os.FAMILY_MAC)
 class BinomPublishPlugin : Plugin<Project> {
     private val logger = Logger.getLogger(this::class.java.name)
     override fun apply(target: Project) {
@@ -102,6 +103,9 @@ class BinomPublishPlugin : Plugin<Project> {
                 }
             }
         }
+        publishing.publications.removeIf {
+            isPublicationSupport(publicationName = it.name)
+        }
         if (signApply) {
             target.extensions.configure(SigningExtension::class.java) {
                 it.useInMemoryPgpKeys(gpgKeyId, gpgPrivateKey, gpgPassword)
@@ -112,4 +116,23 @@ class BinomPublishPlugin : Plugin<Project> {
             logger.warning("gpg configuration missing. Jar will be publish without sign")
         }
     }
+
+    private fun isPublicationSupport(publicationName: String): Boolean =
+        if (isMac) {
+            when (publicationName) {
+                "macosX64", "macosArm64", "ios",
+                "iosArm32",
+                "iosArm64",
+                "iosSimulatorArm64",
+                "watchos",
+                "watchosArm32",
+                "watchosArm64",
+                "watchosSimulatorArm64",
+                "watchosX64",
+                "watchosX86" -> true
+                else -> false
+            }
+        } else {
+            true
+        }
 }
