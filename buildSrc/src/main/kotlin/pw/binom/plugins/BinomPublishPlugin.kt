@@ -55,7 +55,7 @@ class BinomPublishPlugin : Plugin<Project> {
         val publishing = target.extensions.findByName("publishing") as PublishingExtension
         publishing.repositories {
             it.maven {
-                it.name = "BinomRepository"
+                it.name = "Binom"
                 it.url = URI(target.property(BINOM_REPO_URL) as String)
                 it.credentials {
                     it.username = target.property(BINOM_REPO_USER) as String
