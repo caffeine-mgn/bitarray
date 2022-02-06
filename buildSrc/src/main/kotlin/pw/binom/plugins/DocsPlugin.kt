@@ -5,7 +5,6 @@ import org.gradle.api.Project
 import org.gradle.api.publish.PublishingExtension
 import org.gradle.api.publish.maven.MavenPublication
 import org.gradle.api.tasks.bundling.Jar
-import org.jetbrains.dokka.gradle.DokkaTask
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
 class DocsPlugin : Plugin<Project> {
@@ -33,7 +32,19 @@ class DocsPlugin : Plugin<Project> {
 //        }
 
         val publishing = target.extensions.findByName("publishing") as PublishingExtension
-
+        val dokkaTask = target.tasks.getByName("dokkaHtml")
+        val dokkaJarTask = target.tasks.register("dokkaHtmlJar", Jar::class.java) {
+            it.dependsOn(dokkaTask)
+            it.archiveClassifier.set("javadoc")
+            it.from(dokkaTask.outputs)
+        }
+        publishing.publications {
+            it.configureEach {
+                it as MavenPublication
+                it.artifact(dokkaJarTask)
+            }
+        }
+        /*
         publishing.publications {
             it.forEach { publication ->
                 println("--->${publication.name}")
@@ -70,5 +81,6 @@ class DocsPlugin : Plugin<Project> {
                 publication.artifact(docJar)
             }
         }
+        */
     }
 }
