@@ -5,7 +5,7 @@ name: Publishing
 
 on:
   push:
-    branches: [ main, 'snapshot' ]
+    branches: [ main, 'dev' ]
   workflow_dispatch:
     inputs:
       machine:
