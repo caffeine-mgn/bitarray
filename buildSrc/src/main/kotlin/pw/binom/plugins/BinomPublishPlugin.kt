@@ -103,9 +103,6 @@ class BinomPublishPlugin : Plugin<Project> {
                 }
             }
         }
-        publishing.publications.removeIf {
-            isPublicationSupport(publicationName = it.name)
-        }
         if (signApply) {
             target.extensions.configure(SigningExtension::class.java) {
                 it.useInMemoryPgpKeys(gpgKeyId, gpgPrivateKey, gpgPassword)
