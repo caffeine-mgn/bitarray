@@ -118,7 +118,7 @@ value class BytesBitArray(val data: ByteArray) : MutableBitArray {
             ).toByte()
     }
 
-    override fun fulled(value: Boolean, startIndex: Int, endIndex: Int): BitArray {
+    override fun fulled(value: Boolean, startIndex: Int, endIndex: Int): MutableBitArray {
         val out = BytesBitArray(data.copyOf())
         for (i in startIndex..endIndex) {
             out[i] = value
