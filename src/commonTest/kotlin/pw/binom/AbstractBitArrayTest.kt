@@ -35,6 +35,7 @@ abstract class AbstractBitArrayTest {
     @Test
     fun getByte4Test() {
         var array = makeNew().update(0, true)
+        println(" after set ${array.getByte4(0).toBitsetString()}")
         assertEquals(8, array.getByte4(0))
         array = makeNew().update(4, true)
         assertEquals(8, array.getByte4(4))

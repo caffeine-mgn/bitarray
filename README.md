@@ -5,7 +5,7 @@
 [![Gradle build](https://github.com/caffeine-mgn/bitarray/actions/workflows/publish.yml/badge.svg) ](https://github.com/caffeine-mgn/bitarray/actions/workflows/publish.yml) <br><br>
 
 ### Support targets
-* jvm
+* Jvm
 * Linux x64
 * Linux Arm32Hfp
 * Linux Arm64
@@ -35,29 +35,38 @@
 ### Description
 BitArray for Kotlin Common Library contains:
 
-* [BitArray32](src/commonMain/kotlin/pw/binom/BitArray32.kt)
-* [BitArray64](src/commonMain/kotlin/pw/binom/BitArray64.kt)
-* [BytesBitArray](src/commonMain/kotlin/pw/binom/BytesBitArray.kt)
+* [BitArray32](src/commonMain/kotlin/pw/binom/BitArray32.kt) based in `Int`
+* [BitArray64](src/commonMain/kotlin/pw/binom/BitArray64.kt) based on `Long`
+* [BytesBitArray](src/commonMain/kotlin/pw/binom/BytesBitArray.kt) based on `ByteArray`
+* [LongsBitArray](src/commonMain/kotlin/pw/binom/LongsBitArray.kt) based on `LongArray`
 
 All classes implements [BitArray](src/commonMain/kotlin/pw/binom/BitArray.kt). All classes is `inline` classes.
-`BitArray32` based in `Int`, `BitArray64` based on `Long` and `BytesBitArray` based on `ByteArray`
+
+### Integration
+#### Gradle
+```kotlin
+dependencies {
+    implementation("pw.binom:bitarray:0.1.0")
+}
+```
 
 ### Examples
 
 #### BitArray32/BitArray64
 
 ```kotlin
-var array = BitArray32()// or BitArray64
+var array = BitArray32() // or BitArray64
 array = array.update(index = 1, value = true)
 println("value is ${array[1]}")
 ```
 
-#### BytesBitArray
+#### BytesBitArray/LongsBitArray
 
 ```kotlin
-val array = BytesBitArray(6) //or BytesBitArray(ByteArray(6))
-array[1] = true// was modified current value without reassign `array` variable
+val array = BytesBitArray(6) // or LongsBitArray(LongArray(3))
+array[1] = true // was modified current value without reassign `array` variable
 println("value is ${array[1]}")
 val array2 = array.update(index = 1, value = false)// creates new array
-println("value is ${array2[1]}")
+println("value is ${array[1]}") // prints "false"
+println("value is ${array2[1]}") // prints "true"
 ```

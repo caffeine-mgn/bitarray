@@ -20,7 +20,7 @@ value class BitArray64(val value: Long = 0) : BitArray {
     override val size: Int
         get() = MAX_BITS
 
-    override fun full(value: Boolean, startIndex: Int, endIndex: Int): BitArray64 {
+    override fun fulled(value: Boolean, startIndex: Int, endIndex: Int): BitArray64 {
         if (startIndex == 0 && endIndex >= Long.SIZE_BITS - 1) {
             val numberValue = when (value) {
                 true -> 0xFFFFFFFFFFFFFFFFuL.toLong()
@@ -28,17 +28,15 @@ value class BitArray64(val value: Long = 0) : BitArray {
             }
             return BitArray64(numberValue)
         }
-        return super.full(value, startIndex, endIndex) as BitArray64
+        return super.fulled(value, startIndex, endIndex) as BitArray64
     }
 
-    override operator fun get(index: Int): Boolean = value and (1L shl (MAX_BITS_1 - index)) != 0L
+    override operator fun get(index: Int): Boolean = value[index] // value and (1L shl (MAX_BITS_1 - index)) != 0L
+    override fun isEmpty(): Boolean = false
+
     override fun update(index: Int, value: Boolean) =
-        BitArray64(
-            if (value)
-                (this.value or (1L shl (MAX_BITS_1 - index)))
-            else
-                (this.value.inv() or (1L shl MAX_BITS_1 - index)).inv()
-        )
+        BitArray64(this.value.update(index = index, value = value))
+
     override fun inverted(): BitArray64 = BitArray64(value.inv())
 
     fun toLong() = value
@@ -60,12 +58,7 @@ value class BitArray64(val value: Long = 0) : BitArray {
      * Returns value as unsigned int in radix 2
      */
     override fun toString(): String = value.toBitsetString()
-    override fun iterator() = object : BitArrayListIterator(0) {
-        override val size: Int
-            get() = 64
-
-        override fun get(index: Int): Boolean = this@BitArray64[index]
-    }
+    override fun copy() = BitArray64(value)
 }
 
 fun Long.toBitset() = BitArray64(this)
@@ -74,17 +67,17 @@ fun Long.toBitset() = BitArray64(this)
  * Returns int as bit set string. Example:
  * value = 0b00110100, result=00000000000000000000000000110100
  */
-private fun Long.toBitsetString(): String {
-    val leftPart = toULong().toString(2)
-    var len = MAX_BITS - leftPart.length
-    val sb = StringBuilder()
-    while (len > 0) {
-        len--
-        sb.append("0")
-    }
-    sb.append(leftPart)
-    return sb.toString()
-}
+// private fun Long.toBitsetString(): String {
+//    val leftPart = toULong().toString(2)
+//    var len = MAX_BITS - leftPart.length
+//    val sb = StringBuilder()
+//    while (len > 0) {
+//        len--
+//        sb.append("0")
+//    }
+//    sb.append(leftPart)
+//    return sb.toString()
+// }
 
 private const val MAX_BITS = Long.SIZE_BITS
 private const val MAX_BITS_1 = MAX_BITS - 1

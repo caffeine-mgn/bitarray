@@ -5,7 +5,11 @@ import kotlin.experimental.inv
 import kotlin.jvm.JvmInline
 
 @JvmInline
-value class BytesBitArray(val data: ByteArray) : BitArray {
+value class BytesBitArray(val data: ByteArray) : MutableBitArray {
+
+    /**
+     * Size of array in bytes. For example `BytesBitArray(2)` creates BytesBitArray with 16 elements
+     */
     constructor(byteSize: Int) : this(ByteArray(byteSize))
 
     override operator fun get(index: Int): Boolean {
@@ -14,6 +18,8 @@ value class BytesBitArray(val data: ByteArray) : BitArray {
         return value and mask != 0.toByte()
     }
 
+    override fun isEmpty(): Boolean = data.isEmpty()
+
     override fun update(index: Int, value: Boolean): BytesBitArray {
         val result = BytesBitArray(data.copyOf())
         result[index] = value
@@ -21,9 +27,9 @@ value class BytesBitArray(val data: ByteArray) : BitArray {
     }
 
     override fun inverted() = BytesBitArray(ByteArray(data.size) { data[it].inv() })
-    fun invert() {
-        for (it in data.indices) {
-            data[it] = data[it].inv()
+    override fun invert() {
+        for (i in data.indices) {
+            data[i] = data[i].inv()
         }
     }
 
@@ -46,7 +52,7 @@ value class BytesBitArray(val data: ByteArray) : BitArray {
         return (v1 + v2).toByte()
     }
 
-    fun setByte4(index: Int, value: Byte) {
+    override fun setByte4(index: Int, value: Byte) {
         val byteIndex = index / Byte.SIZE_BITS
         val oldValue = data[byteIndex]
         val bitOffset = index % Byte.SIZE_BITS
@@ -98,7 +104,9 @@ value class BytesBitArray(val data: ByteArray) : BitArray {
         return (leftPart + rightPart).toByte()
     }
 
-    operator fun set(index: Int, value: Boolean) {
+    override fun copy() = BytesBitArray(data.copyOf())
+
+    override operator fun set(index: Int, value: Boolean) {
         val value1 = data[index / Byte.SIZE_BITS].toInt() and 0xFF
         val t = 1 shl (Byte.SIZE_BITS - 1 - index % Byte.SIZE_BITS)
         data[index / Byte.SIZE_BITS] = (
@@ -108,6 +116,14 @@ value class BytesBitArray(val data: ByteArray) : BitArray {
                 (value1.inv() or t).inv()
             }
             ).toByte()
+    }
+
+    override fun fulled(value: Boolean, startIndex: Int, endIndex: Int): BitArray {
+        val out = BytesBitArray(data.copyOf())
+        for (i in startIndex..endIndex) {
+            out[i] = value
+        }
+        return out
     }
 
     override val size
@@ -120,27 +136,9 @@ value class BytesBitArray(val data: ByteArray) : BitArray {
         }
         return sb.toString()
     }
-
-    override fun iterator() = object : BitArrayListIterator(0) {
-        override val size: Int
-            get() = data.size * 8
-
-        override fun get(index: Int): Boolean = this@BytesBitArray[index]
-    }
 }
 
 /**
  * Creates and return [BytesBitArray] using this array as data.
  */
 fun ByteArray.toBitset() = BytesBitArray(this)
-
-private fun Byte.toBitsetString(sb2: StringBuilder = StringBuilder()): String {
-    repeat(Byte.SIZE_BITS) { index ->
-        val mask = 0b1.toByte() shl (Byte.SIZE_BITS - 1 - index)
-        sb2.append(if (this and mask != 0.toByte()) "1" else "0")
-    }
-    return sb2.toString()
-}
-
-private infix fun Byte.shl(count: Int) = ((toInt() and 0xFF) shl count).toByte()
-private infix fun Byte.ushr(count: Int) = ((toInt() and 0xFF) ushr count).toByte()
