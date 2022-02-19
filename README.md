@@ -46,7 +46,7 @@ All classes implements [BitArray](src/commonMain/kotlin/pw/binom/BitArray.kt). A
 #### Gradle
 ```kotlin
 dependencies {
-    implementation("pw.binom:bitarray:0.1.0")
+    implementation("pw.binom:bitarray:0.1.1")
 }
 ```
 
