@@ -3,7 +3,6 @@ import pw.binom.publish.*
 
 plugins {
     id("org.jetbrains.kotlin.multiplatform")
-    id("org.jmailen.kotlinter")
     id("maven-publish")
 }
 
@@ -135,7 +134,4 @@ kotlin {
     }
 }
 
-kotlinter {
-    disabledRules = arrayOf("no-wildcard-imports")
-}
 apply<pw.binom.publish.plugins.PrepareProject>()
