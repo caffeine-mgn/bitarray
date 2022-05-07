@@ -4,8 +4,8 @@
 name: Publishing
 
 on:
-  push:
-    branches: [ main, 'dev' ]
+  release:
+    types: [published]
   workflow_dispatch:
     inputs:
       machine:

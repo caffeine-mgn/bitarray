@@ -1,11 +1,25 @@
 import pw.binom.getGitBranch
-import org.apache.tools.ant.taskdefs.condition.Os
+import pw.binom.publish.propertyOrNull
+
 plugins {
     id("org.jetbrains.kotlin.multiplatform")
     id("org.jmailen.kotlinter")
+    id("maven-publish")
 }
 
 val jsRun = System.getProperty("jsrun") != null
+
+allprojects {
+    val branch = getGitBranch()
+    version = System.getenv("GITHUB_REF_NAME") ?: propertyOrNull("version") ?: "1.0.0-SNAPSHOT"
+    group = "pw.binom"
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        google()
+    }
+}
 
 kotlin {
     jvm()
@@ -110,23 +124,7 @@ kotlin {
     }
 }
 
-allprojects {
-    val branch = getGitBranch()
-    version = if (branch == "main" || branch == "master")
-        pw.binom.Versions.LIB_VERSION
-    else
-        "${pw.binom.Versions.LIB_VERSION}-SNAPSHOT"
-    group = "pw.binom"
-
-    repositories {
-        mavenLocal()
-        mavenCentral()
-        google()
-    }
-}
 kotlinter {
-    indentSize = 4
     disabledRules = arrayOf("no-wildcard-imports")
 }
-apply<pw.binom.plugins.BinomPublishPlugin>()
-apply<pw.binom.plugins.DocsPlugin>()
+apply<pw.binom.publish.plugins.PrepareProject>()
