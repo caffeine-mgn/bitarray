@@ -21,8 +21,20 @@ allprojects {
 }
 
 kotlin {
+    macosX64()
+    macosArm64()
+    ios()
+    iosArm32()
+    iosArm64()
+    iosSimulatorArm64()
+    watchos()
+    watchosArm32()
+    watchosArm64()
+    watchosSimulatorArm64()
+    watchosX64()
+    watchosX86()
+    jvm()
     ifNotMac {
-        jvm()
         linuxX64()
         linuxArm32Hfp()
         linuxArm64()
