@@ -83,9 +83,6 @@ kotlin {
             }
         }
         this.forEach {
-            println("--->${it.name}")
-        }
-        this.forEach {
             if (it.name in listOf(
                     "iosArm32Main",
                     "iosArm64Main",
@@ -149,53 +146,6 @@ kotlin {
                 }
             }
         }
-
-
-//        val macosX64Main by getting {
-//            dependsOn(commonMain)
-//        }
-//        val macosArm64Main by getting {
-//            dependsOn(commonMain)
-//        }
-//        val iosMain by getting {
-//            dependsOn(commonMain)
-//        }
-//        val iosArm32Main by getting {
-//            dependsOn(commonMain)
-//        }
-//        val iosArm64Main by getting {
-//            dependsOn(commonMain)
-//        }
-//        val iosSimulatorArm64Main by getting {
-//            dependsOn(commonMain)
-//        }
-//        val watchosMain by getting {
-//            dependsOn(commonMain)
-//        }
-//        val watchosArm32Main by getting {
-//            dependsOn(commonMain)
-//        }
-//        val watchosArm64Main by getting {
-//            dependsOn(commonMain)
-//        }
-//        val watchosSimulatorArm64Main by getting {
-//            dependsOn(commonMain)
-//        }
-//        val watchosX64Main by getting {
-//            dependsOn(commonMain)
-//        }
-//        val watchosX86Main by getting {
-//            dependsOn(commonMain)
-//        }
     }
 }
 apply<pw.binom.publish.plugins.PrepareProject>()
-
-tasks.withType<org.jetbrains.dokka.gradle.DokkaTask>().configureEach {
-    this.dokkaSourceSets {
-        println("Names: ${dokkaSourceSets.names}")
-//        named("main") {
-//            println("this.name=${this.name}")
-//        }
-    }
-}
