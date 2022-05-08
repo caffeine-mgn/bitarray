@@ -82,6 +82,49 @@ kotlin {
                 implementation(kotlin("test-annotations-common"))
             }
         }
+        this.forEach {
+            println("--->${it.name}")
+        }
+        this.forEach {
+            if (it.name in listOf(
+                    "iosArm32Main",
+                    "iosArm64Main",
+                    "iosMain",
+                    "iosSimulatorArm64Main",
+                    "iosX64Main",
+                    "macosArm64Main",
+                    "macosX64Main",
+                    "watchosArm32Main",
+                    "watchosArm64Main",
+                    "watchosDeviceMain",
+                    "watchosMain",
+                    "watchosSimulatorArm64Main",
+                    "watchosX64Main",
+                    "watchosX86Main"
+                )
+            ) {
+                it.dependsOn(commonMain)
+            }
+            if (it.name in listOf(
+                    "iosArm32Test",
+                    "iosArm64Test",
+                    "iosSimulatorArm64Test",
+                    "iosTest",
+                    "iosX64Test",
+                    "macosArm64Test",
+                    "macosX64Test",
+                    "watchosArm32Test",
+                    "watchosArm64Test",
+                    "watchosDeviceTest",
+                    "watchosSimulatorArm64Test",
+                    "watchosTest",
+                    "watchosX64Test",
+                    "watchosX86Test"
+                )){
+                it.dependsOn(commonTest)
+            }
+        }
+
         ifNotMac {
             val jsMain by getting {
                 dependencies {
@@ -97,7 +140,6 @@ kotlin {
             val jvmMain by getting {
                 dependencies {
                     api("org.jetbrains.kotlin:kotlin-stdlib:${pw.binom.Versions.KOTLIN_VERSION}")
-                    api("org.luaj:luaj-jse:3.0.1")
                 }
             }
 
@@ -107,6 +149,8 @@ kotlin {
                 }
             }
         }
+
+
 //        val macosX64Main by getting {
 //            dependsOn(commonMain)
 //        }
@@ -145,5 +189,13 @@ kotlin {
 //        }
     }
 }
-
 apply<pw.binom.publish.plugins.PrepareProject>()
+
+tasks.withType<org.jetbrains.dokka.gradle.DokkaTask>().configureEach {
+    this.dokkaSourceSets {
+        println("Names: ${dokkaSourceSets.names}")
+//        named("main") {
+//            println("this.name=${this.name}")
+//        }
+    }
+}
