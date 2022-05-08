@@ -26,7 +26,7 @@ dependencies {
     api("org.jetbrains.kotlin:kotlin-stdlib:1.6.10")
     api("org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.21")
     api("org.jetbrains.dokka:dokka-gradle-plugin:1.6.21")
-    api("pw.binom:binom-publish:1.0.0-SNAPSHOT")
+    api("pw.binom:binom-publish:0.1.0")
 //    api("com.android.tools.build:gradle:7.0.0")
 }
 

@@ -117,7 +117,8 @@ kotlin {
                     "watchosTest",
                     "watchosX64Test",
                     "watchosX86Test"
-                )){
+                )
+            ) {
                 it.dependsOn(commonTest)
             }
         }
