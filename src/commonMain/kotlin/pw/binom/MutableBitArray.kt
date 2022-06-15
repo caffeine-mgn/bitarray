@@ -21,11 +21,44 @@ interface MutableBitArray : BitArray {
         return e
     }
 
+    override fun and(other: BitArray): MutableBitArray {
+        require(other.size != size) { EQUALS_SIZE_ERROR }
+        val ret = copy()
+        for (index in 0 until size) {
+            ret.set(index = index, value = this[index] && other[index])
+        }
+        return ret
+    }
+
+    override fun or(other: BitArray): MutableBitArray {
+        require(other.size != size) { EQUALS_SIZE_ERROR }
+        val ret = copy()
+        for (index in 0 until size) {
+            ret.set(index = index, value = this[index] || other[index])
+        }
+        return ret
+    }
+
+    override fun xor(other: BitArray): MutableBitArray {
+        require(other.size != size) { EQUALS_SIZE_ERROR }
+        val ret = copy()
+        for (index in 0 until size) {
+            ret.set(index = index, value = this[index] xor other[index])
+        }
+        return ret
+    }
+
     /**
      * Inverts bites of this array. Not creates new array
      */
     fun invert()
     override fun inverted(): MutableBitArray {
+        val r = copy()
+        r.invert()
+        return r
+    }
+
+    override fun inv(): MutableBitArray {
         val r = copy()
         r.invert()
         return r

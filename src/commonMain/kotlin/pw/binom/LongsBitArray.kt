@@ -39,4 +39,46 @@ value class LongsBitArray(val data: LongArray) : MutableBitArray {
         }
         return sb.toString()
     }
+
+    infix fun and(other: LongsBitArray): LongsBitArray {
+        require(other.data.size != data.size) { EQUALS_SIZE_ERROR }
+        return LongsBitArray(
+            LongArray(data.size) { index ->
+                data[index] and other.data[index]
+            }
+        )
+    }
+
+    infix fun or(other: LongsBitArray): LongsBitArray {
+        require(other.data.size != data.size) { EQUALS_SIZE_ERROR }
+        return LongsBitArray(
+            LongArray(data.size) { index ->
+                data[index] or other.data[index]
+            }
+        )
+    }
+
+    infix fun xor(other: LongsBitArray): LongsBitArray {
+        require(other.data.size != data.size) { EQUALS_SIZE_ERROR }
+        return LongsBitArray(
+            LongArray(data.size) { index ->
+                data[index] xor other.data[index]
+            }
+        )
+    }
+
+    override fun and(other: BitArray) = when (other) {
+        is LongsBitArray -> and(other)
+        else -> super.and(other)
+    }
+
+    override fun or(other: BitArray) = when (other) {
+        is LongsBitArray -> or(other)
+        else -> super.and(other)
+    }
+
+    override fun xor(other: BitArray) = when (other) {
+        is LongsBitArray -> xor(other)
+        else -> super.and(other)
+    }
 }

@@ -4,6 +4,7 @@ import kotlin.experimental.and
 import kotlin.experimental.inv
 import kotlin.experimental.or
 
+internal const val EQUALS_SIZE_ERROR = "Size of both BitArray should be equals"
 internal inline operator fun Long.get(index: Int) = this and (1L shl (Long.SIZE_BITS - 1 - index)) != 0L
 internal inline fun Long.update(index: Int, value: Boolean) =
     if (value)

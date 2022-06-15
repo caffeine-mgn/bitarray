@@ -36,15 +36,27 @@ value class BitArray32(val value: Int = 0) : BitArray {
     override fun isEmpty(): Boolean = false
     override fun copy() = BitArray32(value)
 
-    override fun update(index: Int, value: Boolean) =
-        BitArray32(
-            if (value)
-                (this.value or (1 shl (MAX_BITS_1 - index)))
-            else
-                (this.value.inv() or (1 shl MAX_BITS_1 - index)).inv()
-        )
+    override fun update(index: Int, value: Boolean) = BitArray32(
+        if (value) (this.value or (1 shl (MAX_BITS_1 - index)))
+        else (this.value.inv() or (1 shl MAX_BITS_1 - index)).inv()
+    )
 
     override fun inverted(): BitArray32 = BitArray32(value.inv())
+
+    infix fun and(other: BitArray32): BitArray32 {
+        require(other.size != size) { EQUALS_SIZE_ERROR }
+        return BitArray32(value and other.value)
+    }
+
+    infix fun or(other: BitArray32): BitArray32 {
+        require(other.size != size) { EQUALS_SIZE_ERROR }
+        return BitArray32(value or other.value)
+    }
+
+    infix fun xor(other: BitArray32): BitArray32 {
+        require(other.size != size) { EQUALS_SIZE_ERROR }
+        return BitArray32(value xor other.value)
+    }
 
     fun toInt() = value
     fun toUInt() = toInt().toUInt()
@@ -57,13 +69,27 @@ value class BitArray32(val value: Int = 0) : BitArray {
         return BitArray32(leftPart or valueInt or rightPart)
     }
 
-    override fun getByte8(index: Int): Byte =
-        ((value ushr (size - 8 - index)) and 0xFF).toByte()
+    override fun getByte8(index: Int): Byte = ((value ushr (size - 8 - index)) and 0xFF).toByte()
 
     /**
      * Returns value as unsigned int in radix 2
      */
     override fun toString(): String = value.toBitsetString()
+
+    override fun and(other: BitArray): BitArray = when (other) {
+        is BitArray32 -> and(other)
+        else -> super.and(other)
+    }
+
+    override fun or(other: BitArray): BitArray = when (other) {
+        is BitArray32 -> or(other)
+        else -> super.and(other)
+    }
+
+    override fun xor(other: BitArray): BitArray = when (other) {
+        is BitArray32 -> xor(other)
+        else -> super.and(other)
+    }
 }
 
 fun Int.toBitset() = BitArray32(this)

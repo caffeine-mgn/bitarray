@@ -59,6 +59,36 @@ value class BitArray64(val value: Long = 0) : BitArray {
      */
     override fun toString(): String = value.toBitsetString()
     override fun copy() = BitArray64(value)
+
+    infix fun and(other: BitArray64): BitArray64 {
+        require(other.size != size) { EQUALS_SIZE_ERROR }
+        return BitArray64(value and other.value)
+    }
+
+    infix fun or(other: BitArray64): BitArray64 {
+        require(other.size != size) { EQUALS_SIZE_ERROR }
+        return BitArray64(value or other.value)
+    }
+
+    infix fun xor(other: BitArray64): BitArray64 {
+        require(other.size != size) { EQUALS_SIZE_ERROR }
+        return BitArray64(value xor other.value)
+    }
+
+    override fun and(other: BitArray): BitArray = when (other) {
+        is BitArray64 -> and(other)
+        else -> super.and(other)
+    }
+
+    override fun or(other: BitArray): BitArray = when (other) {
+        is BitArray64 -> or(other)
+        else -> super.and(other)
+    }
+
+    override fun xor(other: BitArray): BitArray = when (other) {
+        is BitArray64 -> xor(other)
+        else -> super.and(other)
+    }
 }
 
 fun Long.toBitset() = BitArray64(this)

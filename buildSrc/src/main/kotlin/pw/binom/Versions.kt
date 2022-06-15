@@ -1,5 +1,5 @@
 package pw.binom
 
 object Versions {
-    val KOTLIN_VERSION = "1.6.21"
+    val KOTLIN_VERSION = "1.7.0"
 }

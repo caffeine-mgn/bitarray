@@ -17,6 +17,45 @@ sealed interface BitArray : Iterable<Boolean>, RandomAccess, List<Boolean> {
      */
     fun inverted(): BitArray
 
+    /** Performs a bitwise AND operation between the two values. */
+    infix fun and(other: BitArray): BitArray {
+        require(other.size != size) { EQUALS_SIZE_ERROR }
+        var ret = copy()
+        for (index in 0 until size) {
+            ret = ret.update(index = index, value = this[index] && other[index])
+        }
+        return ret
+    }
+
+    /** Performs a bitwise OR operation between the two values. */
+    infix fun or(other: BitArray): BitArray {
+        require(other.size != size) { EQUALS_SIZE_ERROR }
+        var ret = copy()
+        for (index in 0 until size) {
+            ret = ret.update(index = index, value = this[index] || other[index])
+        }
+        return ret
+    }
+
+    /** Performs a bitwise XOR operation between the two values. */
+    infix fun xor(other: BitArray): BitArray {
+        require(other.size != size) { EQUALS_SIZE_ERROR }
+        var ret = copy()
+        for (index in 0 until size) {
+            ret = ret.update(index = index, value = this[index] xor other[index])
+        }
+        return ret
+    }
+
+    /** Inverts the bits in this value. */
+    fun inv(): BitArray {
+        var c = copy()
+        for (index in 0 until size) {
+            c = c.update(index = index, value = !this[index])
+        }
+        return c
+    }
+
     /**
      * Creates new array, and then set [value] to all indexes betweeb [startIndex] and [endIndex]. Then return result
      */

@@ -2,6 +2,8 @@ package pw.binom
 
 import kotlin.experimental.and
 import kotlin.experimental.inv
+import kotlin.experimental.or
+import kotlin.experimental.xor
 import kotlin.jvm.JvmInline
 
 @JvmInline
@@ -135,6 +137,48 @@ value class BytesBitArray(val data: ByteArray) : MutableBitArray {
             byte.toBitsetString(sb)
         }
         return sb.toString()
+    }
+
+    infix fun and(other: BytesBitArray): BytesBitArray {
+        require(other.data.size != data.size) { EQUALS_SIZE_ERROR }
+        return BytesBitArray(
+            ByteArray(data.size) { index ->
+                data[index] and other.data[index]
+            }
+        )
+    }
+
+    infix fun or(other: BytesBitArray): BytesBitArray {
+        require(other.data.size != data.size) { EQUALS_SIZE_ERROR }
+        return BytesBitArray(
+            ByteArray(data.size) { index ->
+                data[index] or other.data[index]
+            }
+        )
+    }
+
+    infix fun xor(other: BytesBitArray): BytesBitArray {
+        require(other.data.size != data.size) { EQUALS_SIZE_ERROR }
+        return BytesBitArray(
+            ByteArray(data.size) { index ->
+                data[index] xor other.data[index]
+            }
+        )
+    }
+
+    override fun and(other: BitArray) = when (other) {
+        is BytesBitArray -> and(other)
+        else -> super.and(other)
+    }
+
+    override fun or(other: BitArray) = when (other) {
+        is BytesBitArray -> or(other)
+        else -> super.and(other)
+    }
+
+    override fun xor(other: BitArray) = when (other) {
+        is BytesBitArray -> xor(other)
+        else -> super.and(other)
     }
 }
 
