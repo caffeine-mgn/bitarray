@@ -41,7 +41,7 @@ value class LongsBitArray(val data: LongArray) : MutableBitArray {
     }
 
     infix fun and(other: LongsBitArray): LongsBitArray {
-        require(other.data.size != data.size) { EQUALS_SIZE_ERROR }
+        require(other.data.size == data.size) { EQUALS_SIZE_ERROR }
         return LongsBitArray(
             LongArray(data.size) { index ->
                 data[index] and other.data[index]
@@ -50,7 +50,7 @@ value class LongsBitArray(val data: LongArray) : MutableBitArray {
     }
 
     infix fun or(other: LongsBitArray): LongsBitArray {
-        require(other.data.size != data.size) { EQUALS_SIZE_ERROR }
+        require(other.data.size == data.size) { EQUALS_SIZE_ERROR }
         return LongsBitArray(
             LongArray(data.size) { index ->
                 data[index] or other.data[index]
@@ -59,7 +59,7 @@ value class LongsBitArray(val data: LongArray) : MutableBitArray {
     }
 
     infix fun xor(other: LongsBitArray): LongsBitArray {
-        require(other.data.size != data.size) { EQUALS_SIZE_ERROR }
+        require(other.data.size == data.size) { EQUALS_SIZE_ERROR }
         return LongsBitArray(
             LongArray(data.size) { index ->
                 data[index] xor other.data[index]

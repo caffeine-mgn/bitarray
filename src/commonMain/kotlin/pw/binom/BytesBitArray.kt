@@ -140,7 +140,7 @@ value class BytesBitArray(val data: ByteArray) : MutableBitArray {
     }
 
     infix fun and(other: BytesBitArray): BytesBitArray {
-        require(other.data.size != data.size) { EQUALS_SIZE_ERROR }
+        require(other.data.size == data.size) { EQUALS_SIZE_ERROR }
         return BytesBitArray(
             ByteArray(data.size) { index ->
                 data[index] and other.data[index]
@@ -149,7 +149,7 @@ value class BytesBitArray(val data: ByteArray) : MutableBitArray {
     }
 
     infix fun or(other: BytesBitArray): BytesBitArray {
-        require(other.data.size != data.size) { EQUALS_SIZE_ERROR }
+        require(other.data.size == data.size) { EQUALS_SIZE_ERROR }
         return BytesBitArray(
             ByteArray(data.size) { index ->
                 data[index] or other.data[index]
@@ -158,7 +158,7 @@ value class BytesBitArray(val data: ByteArray) : MutableBitArray {
     }
 
     infix fun xor(other: BytesBitArray): BytesBitArray {
-        require(other.data.size != data.size) { EQUALS_SIZE_ERROR }
+        require(other.data.size == data.size) { EQUALS_SIZE_ERROR }
         return BytesBitArray(
             ByteArray(data.size) { index ->
                 data[index] xor other.data[index]

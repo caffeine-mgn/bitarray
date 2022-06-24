@@ -19,7 +19,7 @@ sealed interface BitArray : Iterable<Boolean>, RandomAccess, List<Boolean> {
 
     /** Performs a bitwise AND operation between the two values. */
     infix fun and(other: BitArray): BitArray {
-        require(other.size != size) { EQUALS_SIZE_ERROR }
+        require(other.size == size) { EQUALS_SIZE_ERROR }
         var ret = copy()
         for (index in 0 until size) {
             ret = ret.update(index = index, value = this[index] && other[index])
@@ -29,7 +29,7 @@ sealed interface BitArray : Iterable<Boolean>, RandomAccess, List<Boolean> {
 
     /** Performs a bitwise OR operation between the two values. */
     infix fun or(other: BitArray): BitArray {
-        require(other.size != size) { EQUALS_SIZE_ERROR }
+        require(other.size == size) { EQUALS_SIZE_ERROR }
         var ret = copy()
         for (index in 0 until size) {
             ret = ret.update(index = index, value = this[index] || other[index])
@@ -39,7 +39,7 @@ sealed interface BitArray : Iterable<Boolean>, RandomAccess, List<Boolean> {
 
     /** Performs a bitwise XOR operation between the two values. */
     infix fun xor(other: BitArray): BitArray {
-        require(other.size != size) { EQUALS_SIZE_ERROR }
+        require(other.size == size) { EQUALS_SIZE_ERROR }
         var ret = copy()
         for (index in 0 until size) {
             ret = ret.update(index = index, value = this[index] xor other[index])

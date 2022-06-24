@@ -61,17 +61,14 @@ value class BitArray64(val value: Long = 0) : BitArray {
     override fun copy() = BitArray64(value)
 
     infix fun and(other: BitArray64): BitArray64 {
-        require(other.size != size) { EQUALS_SIZE_ERROR }
         return BitArray64(value and other.value)
     }
 
     infix fun or(other: BitArray64): BitArray64 {
-        require(other.size != size) { EQUALS_SIZE_ERROR }
         return BitArray64(value or other.value)
     }
 
     infix fun xor(other: BitArray64): BitArray64 {
-        require(other.size != size) { EQUALS_SIZE_ERROR }
         return BitArray64(value xor other.value)
     }
 

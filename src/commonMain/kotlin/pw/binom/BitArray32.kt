@@ -44,17 +44,17 @@ value class BitArray32(val value: Int = 0) : BitArray {
     override fun inverted(): BitArray32 = BitArray32(value.inv())
 
     infix fun and(other: BitArray32): BitArray32 {
-        require(other.size != size) { EQUALS_SIZE_ERROR }
+        require(other.size == size) { EQUALS_SIZE_ERROR }
         return BitArray32(value and other.value)
     }
 
     infix fun or(other: BitArray32): BitArray32 {
-        require(other.size != size) { EQUALS_SIZE_ERROR }
+        require(other.size == size) { EQUALS_SIZE_ERROR }
         return BitArray32(value or other.value)
     }
 
     infix fun xor(other: BitArray32): BitArray32 {
-        require(other.size != size) { EQUALS_SIZE_ERROR }
+        require(other.size == size) { EQUALS_SIZE_ERROR }
         return BitArray32(value xor other.value)
     }
 

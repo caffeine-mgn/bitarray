@@ -1,5 +1,6 @@
 import pw.binom.getGitBranch
-import pw.binom.publish.*
+import pw.binom.publish.ifNotMac
+import pw.binom.publish.propertyOrNull
 
 plugins {
     id("org.jetbrains.kotlin.multiplatform")
@@ -10,7 +11,8 @@ val jsRun = System.getProperty("jsrun") != null
 
 allprojects {
     val branch = getGitBranch()
-    version = System.getenv("GITHUB_REF_NAME") ?: propertyOrNull("version") ?: "1.0.0-SNAPSHOT"
+    version = System.getenv("GITHUB_REF_NAME") ?: propertyOrNull("version")?.takeIf { it != "unspecified" }
+        ?: "1.0.0-SNAPSHOT"
     group = "pw.binom"
 
     repositories {
