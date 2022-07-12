@@ -1,7 +1,7 @@
 # BitArray
 
 [![GitHub license](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg?style=flat)](http://www.apache.org/licenses/LICENSE-2.0)
-[![Kotlin 1.7.0](https://img.shields.io/badge/Kotlin-1.7.0-blue.svg?style=flat&logo=kotlin)](http://kotlinlang.org)
+[![Kotlin 1.7.10](https://img.shields.io/badge/Kotlin-1.7.10-blue.svg?style=flat&logo=kotlin)](http://kotlinlang.org)
 [![Gradle build](https://github.com/caffeine-mgn/bitarray/actions/workflows/publish.yml/badge.svg) ](https://github.com/caffeine-mgn/bitarray/actions/workflows/publish.yml) <br><br>
 
 ### Description
@@ -18,7 +18,7 @@ All classes implements [BitArray](src/commonMain/kotlin/pw/binom/BitArray.kt). A
 #### Gradle
 ```kotlin
 dependencies {
-    implementation("pw.binom:bitarray:0.1.1")
+    implementation("pw.binom:bitarray:0.1.2")
 }
 ```
 
