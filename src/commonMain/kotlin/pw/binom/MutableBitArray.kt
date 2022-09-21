@@ -93,4 +93,12 @@ interface MutableBitArray : BitArray {
         ret[index] = value
         return ret
     }
+
+    fun addAll(other: BitArray): MutableBitArray {
+        require(size == other.size) { "Size of BitArray should be equals" }
+        repeat(size) { index ->
+            this[index] = this[index] || other[index]
+        }
+        return this
+    }
 }

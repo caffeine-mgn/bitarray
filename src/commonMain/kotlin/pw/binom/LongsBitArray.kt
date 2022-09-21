@@ -1,5 +1,6 @@
 package pw.binom
 
+import kotlin.experimental.or
 import kotlin.jvm.JvmInline
 
 @JvmInline
@@ -67,6 +68,14 @@ value class LongsBitArray(val data: LongArray) : MutableBitArray {
         )
     }
 
+    fun addAll(other: LongsBitArray): LongsBitArray {
+        require(data.size == other.data.size) { "Size of BitArray should be equals" }
+        repeat(data.size) { index ->
+            data[index] = data[index] or other.data[index]
+        }
+        return this
+    }
+
     override fun and(other: BitArray) = when (other) {
         is LongsBitArray -> and(other)
         else -> super.and(other)
@@ -79,6 +88,11 @@ value class LongsBitArray(val data: LongArray) : MutableBitArray {
 
     override fun xor(other: BitArray) = when (other) {
         is LongsBitArray -> xor(other)
+        else -> super.and(other)
+    }
+
+    override fun addAll(other: BitArray) = when (other) {
+        is LongsBitArray -> addAll(other)
         else -> super.and(other)
     }
 }

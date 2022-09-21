@@ -111,13 +111,12 @@ value class BytesBitArray(val data: ByteArray) : MutableBitArray {
     override operator fun set(index: Int, value: Boolean) {
         val value1 = data[index / Byte.SIZE_BITS].toInt() and 0xFF
         val t = 1 shl (Byte.SIZE_BITS - 1 - index % Byte.SIZE_BITS)
-        data[index / Byte.SIZE_BITS] = (
-            if (value) {
-                (value1 or t)
-            } else {
-                (value1.inv() or t).inv()
-            }
-            ).toByte()
+        val newValue = if (value) {
+            value1 or t
+        } else {
+            (value1.inv() or t).inv()
+        }
+        data[index / Byte.SIZE_BITS] = newValue.toByte()
     }
 
     override fun fulled(value: Boolean, startIndex: Int, endIndex: Int): MutableBitArray {
@@ -166,6 +165,14 @@ value class BytesBitArray(val data: ByteArray) : MutableBitArray {
         )
     }
 
+    fun addAll(other: BytesBitArray): BytesBitArray {
+        require(data.size == other.data.size) { "Size of BitArray should be equals" }
+        repeat(data.size) { index ->
+            data[index] = data[index] or other.data[index]
+        }
+        return this
+    }
+
     override fun and(other: BitArray) = when (other) {
         is BytesBitArray -> and(other)
         else -> super.and(other)
@@ -178,6 +185,11 @@ value class BytesBitArray(val data: ByteArray) : MutableBitArray {
 
     override fun xor(other: BitArray) = when (other) {
         is BytesBitArray -> xor(other)
+        else -> super.and(other)
+    }
+
+    override fun addAll(other: BitArray) = when (other) {
+        is BytesBitArray -> addAll(other)
         else -> super.and(other)
     }
 }
