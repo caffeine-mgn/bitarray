@@ -10,7 +10,7 @@ plugins {
 val jsRun = System.getProperty("jsrun") != null
 
 allprojects {
-    val branch = getGitBranch()
+//    val branch = getGitBranch()
     version = System.getenv("GITHUB_REF_NAME") ?: propertyOrNull("version")?.takeIf { it != "unspecified" }
         ?: "1.0.0-SNAPSHOT"
     group = "pw.binom"
