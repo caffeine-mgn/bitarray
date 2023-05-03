@@ -67,8 +67,7 @@ kotlin {
                 binaries.executable()
             }
         } else {
-            var applled = false
-            js(IR) {
+            js(BOTH) {
                 browser()
                 nodejs()
             }

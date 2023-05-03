@@ -70,4 +70,5 @@ println("value is ${array2[1]}") // prints "true"
 * WatchOS x64
 * WatchOS x86
 * Wasm32
+* Wasm
 * JS (Legacy and IR)
