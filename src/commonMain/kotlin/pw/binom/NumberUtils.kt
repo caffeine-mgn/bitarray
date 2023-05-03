@@ -7,17 +7,19 @@ import kotlin.experimental.or
 internal const val EQUALS_SIZE_ERROR = "Size of both BitArray should be equals"
 internal inline operator fun Long.get(index: Int) = this and (1L shl (Long.SIZE_BITS - 1 - index)) != 0L
 internal inline fun Long.update(index: Int, value: Boolean) =
-    if (value)
+    if (value) {
         (this or (1L shl ((Long.SIZE_BITS - 1 - index))))
-    else
+    } else {
         (this.inv() or (1L shl (Long.SIZE_BITS - 1 - index))).inv()
+    }
 
 internal inline operator fun Byte.get(index: Int) = this and (1.toByte() shl (Byte.SIZE_BITS - 1 - index)) != 0.toByte()
 internal inline fun Byte.update(index: Int, value: Boolean) =
-    if (value)
+    if (value) {
         (this or (1.toByte() shl ((Byte.SIZE_BITS - 1 - index))))
-    else
+    } else {
         (this.inv() or (1.toByte() shl (Byte.SIZE_BITS - 1 - index))).inv()
+    }
 
 internal infix fun Byte.shl(count: Int) = ((toInt() and 0xFF) shl count).toByte()
 internal infix fun Byte.ushr(count: Int) = ((toInt() and 0xFF) ushr count).toByte()

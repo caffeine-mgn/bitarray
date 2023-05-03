@@ -25,7 +25,7 @@ abstract class AbstractBitArrayTest {
     }
 
     @Test
-    fun getByte8Test() {
+    open fun getByte8Test() {
         var array = makeNew().update(0, true)
         assertEquals(-128, array.getByte8(0))
         array = makeNew().update(1, true)
@@ -33,8 +33,9 @@ abstract class AbstractBitArrayTest {
     }
 
     @Test
-    fun getByte4Test() {
+    open fun getByte4Test() {
         var array = makeNew().update(0, true)
+        println("${this::class} array->$array")
         println(" after set ${array.getByte4(0).toBitsetString()}")
         assertEquals(8, array.getByte4(0))
         array = makeNew().update(4, true)

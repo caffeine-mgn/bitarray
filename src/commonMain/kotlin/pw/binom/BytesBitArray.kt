@@ -133,7 +133,7 @@ value class BytesBitArray(val data: ByteArray) : MutableBitArray {
     override fun toString(): String {
         val sb = StringBuilder(size)
         data.forEach { byte ->
-            sb.append(byte.toString(2).padStart(length = Byte.SIZE_BITS, padChar = '0'))
+            sb.append(byte.toUByte().toString(2).padStart(length = Byte.SIZE_BITS, padChar = '0'))
         }
         return sb.toString()
     }

@@ -7,6 +7,7 @@
 ### Description
 BitArray for Kotlin Common Library contains:
 
+* [BitArray8](src/commonMain/kotlin/pw/binom/BitArray8.kt) based in `Byte`
 * [BitArray16](src/commonMain/kotlin/pw/binom/BitArray16.kt) based in `Short`
 * [BitArray32](src/commonMain/kotlin/pw/binom/BitArray32.kt) based in `Int`
 * [BitArray64](src/commonMain/kotlin/pw/binom/BitArray64.kt) based on `Long`
