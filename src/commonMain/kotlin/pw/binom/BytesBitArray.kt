@@ -133,7 +133,7 @@ value class BytesBitArray(val data: ByteArray) : MutableBitArray {
     override fun toString(): String {
         val sb = StringBuilder(size)
         data.forEach { byte ->
-            byte.toBitsetString(sb)
+            sb.append(byte.toString(2).padStart(length = Byte.SIZE_BITS, padChar = '0'))
         }
         return sb.toString()
     }
@@ -143,7 +143,7 @@ value class BytesBitArray(val data: ByteArray) : MutableBitArray {
         return BytesBitArray(
             ByteArray(data.size) { index ->
                 data[index] and other.data[index]
-            }
+            },
         )
     }
 
@@ -152,7 +152,7 @@ value class BytesBitArray(val data: ByteArray) : MutableBitArray {
         return BytesBitArray(
             ByteArray(data.size) { index ->
                 data[index] or other.data[index]
-            }
+            },
         )
     }
 
@@ -161,7 +161,7 @@ value class BytesBitArray(val data: ByteArray) : MutableBitArray {
         return BytesBitArray(
             ByteArray(data.size) { index ->
                 data[index] xor other.data[index]
-            }
+            },
         )
     }
 

@@ -1,5 +1,6 @@
 package pw.binom
 
+import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class BytesBitsetTest : AbstractBitArrayTest() {
