@@ -1,6 +1,5 @@
 package pw.binom
 
-import kotlin.experimental.or
 import kotlin.jvm.JvmInline
 
 @JvmInline
@@ -16,6 +15,8 @@ value class LongsBitArray(val data: LongArray) : MutableBitArray {
         val internalIndex = index % Long.SIZE_BITS
         data[externalIndex] = data[externalIndex].update(index = internalIndex, value = value)
     }
+
+    override fun inv() = LongsBitArray(LongArray(data.size) { data[it].inv() })
 
     override fun invert() {
         for (i in data.indices) {
@@ -46,7 +47,7 @@ value class LongsBitArray(val data: LongArray) : MutableBitArray {
         return LongsBitArray(
             LongArray(data.size) { index ->
                 data[index] and other.data[index]
-            }
+            },
         )
     }
 
@@ -55,7 +56,7 @@ value class LongsBitArray(val data: LongArray) : MutableBitArray {
         return LongsBitArray(
             LongArray(data.size) { index ->
                 data[index] or other.data[index]
-            }
+            },
         )
     }
 
@@ -64,7 +65,7 @@ value class LongsBitArray(val data: LongArray) : MutableBitArray {
         return LongsBitArray(
             LongArray(data.size) { index ->
                 data[index] xor other.data[index]
-            }
+            },
         )
     }
 

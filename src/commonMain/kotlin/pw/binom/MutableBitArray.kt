@@ -8,9 +8,13 @@ interface MutableBitArray : BitArray {
      * Sets [value] to all indexes betweeb [startIndex] and [endIndex] in this array
      */
     fun full(value: Boolean, startIndex: Int, endIndex: Int) {
-        for (i in startIndex..lastIndex) {
+        for (i in startIndex..endIndex) {
             this[i] = value
         }
+    }
+
+    fun clear() {
+        full(value = false, startIndex = 0, endIndex = lastIndex)
     }
 
     override fun fulled(value: Boolean, startIndex: Int, endIndex: Int): MutableBitArray {
@@ -51,11 +55,10 @@ interface MutableBitArray : BitArray {
     /**
      * Inverts bites of this array. Not creates new array
      */
-    fun invert()
-    override fun inverted(): MutableBitArray {
-        val r = copy()
-        r.invert()
-        return r
+    fun invert() {
+        for (i in 0 until size) {
+            this[i] = !this[i]
+        }
     }
 
     override fun inv(): MutableBitArray {

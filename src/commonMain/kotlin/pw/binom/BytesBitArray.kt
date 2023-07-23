@@ -28,7 +28,7 @@ value class BytesBitArray(val data: ByteArray) : MutableBitArray {
         return result
     }
 
-    override fun inverted() = BytesBitArray(ByteArray(data.size) { data[it].inv() })
+    override fun inv() = BytesBitArray(ByteArray(data.size) { data[it].inv() })
     override fun invert() {
         for (i in data.indices) {
             data[i] = data[i].inv()
@@ -107,6 +107,25 @@ value class BytesBitArray(val data: ByteArray) : MutableBitArray {
     }
 
     override fun copy() = BytesBitArray(data.copyOf())
+    override fun clear() {
+        for (i in 0 until data.size) {
+            data[i] = 0
+        }
+    }
+
+    override fun full(value: Boolean, startIndex: Int, endIndex: Int) {
+        if (startIndex == 0 && endIndex == lastIndex) {
+            if (value) {
+                for (i in 0 until data.size) {
+                    data[i] = Byte.MAX_VALUE
+                }
+            } else {
+                clear()
+            }
+        } else {
+            super.full(value, startIndex, endIndex)
+        }
+    }
 
     override operator fun set(index: Int, value: Boolean) {
         val value1 = data[index / Byte.SIZE_BITS].toInt() and 0xFF
@@ -117,14 +136,6 @@ value class BytesBitArray(val data: ByteArray) : MutableBitArray {
             (value1.inv() or t).inv()
         }
         data[index / Byte.SIZE_BITS] = newValue.toByte()
-    }
-
-    override fun fulled(value: Boolean, startIndex: Int, endIndex: Int): MutableBitArray {
-        val out = BytesBitArray(data.copyOf())
-        for (i in startIndex..endIndex) {
-            out[i] = value
-        }
-        return out
     }
 
     override val size

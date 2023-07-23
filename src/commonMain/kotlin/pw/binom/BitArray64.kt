@@ -37,7 +37,7 @@ value class BitArray64(val value: Long = 0) : BitArray {
     override fun update(index: Int, value: Boolean) =
         BitArray64(this.value.update(index = index, value = value))
 
-    override fun inverted(): BitArray64 = BitArray64(value.inv())
+    override fun inv(): BitArray64 = BitArray64(value.inv())
 
     fun toLong() = value
     fun toULong() = toLong().toULong()

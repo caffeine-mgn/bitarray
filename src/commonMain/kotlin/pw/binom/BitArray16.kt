@@ -1,6 +1,9 @@
 package pw.binom
 
-import kotlin.experimental.*
+import kotlin.experimental.and
+import kotlin.experimental.inv
+import kotlin.experimental.or
+import kotlin.experimental.xor
 import kotlin.jvm.JvmInline
 
 /**
@@ -41,11 +44,14 @@ value class BitArray16(val value: Short = 0) : BitArray {
     override fun copy() = BitArray16(value)
 
     override fun update(index: Int, value: Boolean) = BitArray16(
-        if (value) (this.value or (1 shl (MAX_BITS_1 - index)).toShort())
-        else (this.value.inv() or (1 shl MAX_BITS_1 - index).toShort()).inv()
+        if (value) {
+            (this.value or (1 shl (MAX_BITS_1 - index)).toShort())
+        } else {
+            (this.value.inv() or (1 shl MAX_BITS_1 - index).toShort()).inv()
+        },
     )
 
-    override fun inverted(): BitArray16 = BitArray16(value.inv())
+    override fun inv(): BitArray16 = BitArray16(value.inv())
 
     infix fun and(other: BitArray16): BitArray16 {
         require(other.size == size) { EQUALS_SIZE_ERROR }

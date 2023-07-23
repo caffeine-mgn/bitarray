@@ -1,6 +1,9 @@
 package pw.binom
 
-import kotlin.experimental.*
+import kotlin.experimental.and
+import kotlin.experimental.inv
+import kotlin.experimental.or
+import kotlin.experimental.xor
 import kotlin.jvm.JvmInline
 
 /**
@@ -48,7 +51,7 @@ value class BitArray8(val value: Byte = 0) : BitArray {
         },
     )
 
-    override fun inverted() = BitArray8(value.inv())
+    override fun inv() = BitArray8(value.inv())
 
     infix fun and(other: BitArray8): BitArray8 {
         require(other.size == size) { EQUALS_SIZE_ERROR }

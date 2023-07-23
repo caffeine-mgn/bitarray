@@ -2,7 +2,7 @@ package pw.binom
 
 import kotlin.test.assertTrue
 
-class LongsBitsetTest : AbstractBitArrayTest() {
+class LongsBitsetTest : AbstractMutableBitArrayTest() {
     override fun makeNew() = LongsBitArray(LongArray(4))
 
     override fun toStringTest() {

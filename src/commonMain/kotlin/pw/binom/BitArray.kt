@@ -11,11 +11,7 @@ sealed interface BitArray : Iterable<Boolean>, RandomAccess, List<Boolean> {
     fun copy(): BitArray
     fun update(index: Int, value: Boolean): BitArray
     fun toBooleanArray() = BooleanArray(size) { this[it] }
-
-    /**
-     * Creates copy of this array, then inverts all bits and returns result
-     */
-    fun inverted(): BitArray
+    override fun isEmpty(): Boolean = size == 0
 
     /** Performs a bitwise AND operation between the two values. */
     infix fun and(other: BitArray): BitArray {
@@ -48,12 +44,12 @@ sealed interface BitArray : Iterable<Boolean>, RandomAccess, List<Boolean> {
     }
 
     /** Inverts the bits in this value. */
-    fun inv(): BitArray {
-        var c = copy()
+    operator fun inv(): BitArray {
+        var out = copy()
         for (index in 0 until size) {
-            c = c.update(index = index, value = !this[index])
+            out = out.update(index, this[index])
         }
-        return c
+        return out
     }
 
     /**
@@ -179,6 +175,6 @@ sealed interface BitArray : Iterable<Boolean>, RandomAccess, List<Boolean> {
     override fun listIterator(index: Int) = BitArrayListIteratorImpl(
         cursor = index,
         sizeProvider = { this@BitArray.size },
-        dataProvider = { this@BitArray[it] }
+        dataProvider = { this@BitArray[it] },
     )
 }

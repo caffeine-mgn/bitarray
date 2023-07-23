@@ -37,11 +37,14 @@ value class BitArray32(val value: Int = 0) : BitArray {
     override fun copy() = BitArray32(value)
 
     override fun update(index: Int, value: Boolean) = BitArray32(
-        if (value) (this.value or (1 shl (MAX_BITS_1 - index)))
-        else (this.value.inv() or (1 shl MAX_BITS_1 - index)).inv()
+        if (value) {
+            (this.value or (1 shl (MAX_BITS_1 - index)))
+        } else {
+            (this.value.inv() or (1 shl MAX_BITS_1 - index)).inv()
+        },
     )
 
-    override fun inverted(): BitArray32 = BitArray32(value.inv())
+    override fun inv(): BitArray32 = BitArray32(value.inv())
 
     infix fun and(other: BitArray32): BitArray32 {
         require(other.size == size) { EQUALS_SIZE_ERROR }

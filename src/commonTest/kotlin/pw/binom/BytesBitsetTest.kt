@@ -1,9 +1,8 @@
 package pw.binom
 
-import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class BytesBitsetTest : AbstractBitArrayTest() {
+class BytesBitsetTest : AbstractMutableBitArrayTest() {
     override fun makeNew() = BytesBitArray(ByteArray(4))
 
     override fun toStringTest() {
