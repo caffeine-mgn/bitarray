@@ -24,6 +24,26 @@ value class LongsBitArray(val data: LongArray) : MutableBitArray {
         }
     }
 
+    override fun clear() {
+        for (i in 0 until data.size) {
+            data[i] = 0
+        }
+    }
+
+    override fun full(value: Boolean, startIndex: Int, endIndex: Int) {
+        if (startIndex == 0 && endIndex == lastIndex) {
+            if (value) {
+                for (i in 0 until data.size) {
+                    data[i] = -1
+                }
+            } else {
+                clear()
+            }
+        } else {
+            super.full(value, startIndex, endIndex)
+        }
+    }
+
     override fun copy() = LongsBitArray(data.copyOf())
 
     override val size: Int

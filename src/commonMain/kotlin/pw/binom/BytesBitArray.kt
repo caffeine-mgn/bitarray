@@ -117,7 +117,7 @@ value class BytesBitArray(val data: ByteArray) : MutableBitArray {
         if (startIndex == 0 && endIndex == lastIndex) {
             if (value) {
                 for (i in 0 until data.size) {
-                    data[i] = Byte.MAX_VALUE
+                    data[i] = -1
                 }
             } else {
                 clear()

@@ -14,4 +14,18 @@ abstract class AbstractMutableBitArrayTest : AbstractBitArrayTest() {
         arr.clear()
         assertTrue(arr.all { !it })
     }
+
+    @Test
+    fun full1Test() {
+        val arr = makeNew()
+        arr.full(true, startIndex = 0, endIndex = arr.lastIndex)
+        assertTrue(arr.all { it })
+    }
+
+    @Test
+    fun full2Test() {
+        val arr = makeNew()
+        arr.full(false, startIndex = 0, endIndex = arr.lastIndex)
+        assertTrue(arr.all { !it })
+    }
 }
