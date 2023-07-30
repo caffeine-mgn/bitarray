@@ -1,4 +1,4 @@
-package pw.binom
+package pw.binom.bitarray
 
 import kotlin.experimental.or
 

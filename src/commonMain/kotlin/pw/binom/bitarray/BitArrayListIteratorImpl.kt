@@ -1,4 +1,4 @@
-package pw.binom
+package pw.binom.bitarray
 
 class BitArrayListIteratorImpl(cursor: Int, val sizeProvider: () -> Int, val dataProvider: (Int) -> Boolean) :
     BitArrayListIterator(cursor = cursor) {

@@ -1,4 +1,4 @@
-package pw.binom
+package pw.binom.bitarray
 
 interface MutableBitArray : BitArray {
     override fun copy(): MutableBitArray

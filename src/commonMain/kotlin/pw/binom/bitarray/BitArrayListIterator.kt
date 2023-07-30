@@ -1,4 +1,4 @@
-package pw.binom
+package pw.binom.bitarray
 
 abstract class BitArrayListIterator(private var cursor: Int) : ListIterator<Boolean> {
     protected abstract val size: Int
