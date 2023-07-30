@@ -116,4 +116,16 @@ value class LongsBitArray(val data: LongArray) : MutableBitArray {
         is LongsBitArray -> addAll(other)
         else -> super.and(other)
     }
+
+    fun toBytesBitArray(): BytesBitArray {
+        val output = ByteArray(data.size * Long.SIZE_BYTES)
+        data.forEachIndexed { index, l ->
+            var longValue = l
+            repeat(8) { r ->
+                output[index * Long.SIZE_BYTES + r] = (longValue and 0xFF).toByte()
+                longValue = longValue ushr 8
+            }
+        }
+        return BytesBitArray(output)
+    }
 }

@@ -66,3 +66,22 @@ internal fun Byte.toBitsetString(sb2: StringBuilder = StringBuilder()): String {
     }
     return sb2.toString()
 }
+
+internal fun Long.Companion.fromBytes(
+    byte0: Byte,
+    byte1: Byte,
+    byte2: Byte,
+    byte3: Byte,
+    byte4: Byte,
+    byte5: Byte,
+    byte6: Byte,
+    byte7: Byte,
+) =
+    (byte0.toLong() and 0xFFL shl 56) +
+        ((byte1).toLong() and 0xFFL shl 48) +
+        ((byte2).toLong() and 0xFFL shl 40) +
+        ((byte3).toLong() and 0xFFL shl 32) +
+        ((byte4).toLong() and 0xFFL shl 24) +
+        (byte5.toLong() and 0xFFL shl 16) +
+        (byte6.toLong() and 0xFFL shl 8) +
+        (byte7.toLong() and 0xFFL shl 0)
