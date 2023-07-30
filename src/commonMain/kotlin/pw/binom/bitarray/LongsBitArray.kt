@@ -121,8 +121,8 @@ value class LongsBitArray(val data: LongArray) : MutableBitArray {
         val output = ByteArray(data.size * Long.SIZE_BYTES)
         data.forEachIndexed { index, l ->
             var longValue = l
-            repeat(8) { r ->
-                output[index * Long.SIZE_BYTES + r] = (longValue and 0xFF).toByte()
+            repeat(Long.SIZE_BYTES) { r ->
+                output[index * Long.SIZE_BYTES + (7 - r)] = (longValue and 0xFF).toByte()
                 longValue = longValue ushr 8
             }
         }
