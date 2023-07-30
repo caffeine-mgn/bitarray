@@ -205,8 +205,9 @@ value class BytesBitArray(val data: ByteArray) : MutableBitArray {
     }
 
     fun toLongsBitArray(): LongsBitArray {
-        val validSize = (size + 7) / Long.SIZE_BITS
-        require(size == validSize) { "Size of BytesBitArray should be $validSize" }
+        val other = data.size % Long.SIZE_BYTES
+        val validSize = if (other == 0) data.size else data.size - other + Long.SIZE_BYTES
+        require(other == 0) { "Size of BytesBitArray should be $validSize" }
         val ret = LongArray(validSize)
         var cursorInLong = 0
         while (cursorInLong * Long.SIZE_BYTES < data.size) {
