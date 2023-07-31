@@ -26,7 +26,9 @@ class LongsBitsetTest : AbstractMutableBitArrayTest() {
         l[44] = true
 
         val bytes = l.toBytesBitArray()
-        assertContentEquals(l, bytes)
-        assertContentEquals(l, bytes.toLongsBitArray())
+        println("____l=$l")
+        println("bytes=$bytes")
+        assertContentEquals(l, bytes, "#1")
+        assertContentEquals(l, bytes.toLongsBitArray(), "#2")
     }
 }

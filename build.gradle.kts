@@ -1,3 +1,6 @@
+import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
+import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
+import pw.binom.publish.dependsOn
 import pw.binom.publish.ifNotMac
 import pw.binom.publish.propertyOrNull
 import pw.binom.publish.useDefault
@@ -8,6 +11,14 @@ plugins {
 }
 
 val jsRun = System.getProperty("jsrun") != null
+
+fun KotlinMultiplatformExtension.eachNative(func: KotlinNativeTarget.() -> Unit) {
+    this.targets.forEach {
+        if (it is KotlinNativeTarget) {
+            it.func()
+        }
+    }
+}
 
 allprojects {
 //    val branch = getGitBranch()
@@ -67,20 +78,33 @@ kotlin {
                 binaries.executable()
             }
         } else {
-            js(BOTH) {
+            js(IR) {
                 browser()
                 nodejs()
             }
         }
     }
-
+    eachNative {
+        compilations["main"].cinterops {
+            create("bitarrayNative") {
+                defFile = project.file("src/nativeCommonMain/c/bytearray.def")
+                packageName = "pw.binom.bitarray.native"
+            }
+        }
+    }
     sourceSets {
         val commonMain by getting {
             dependencies {
+                api(kotlin("stdlib"))
                 api("org.jetbrains.kotlin:kotlin-stdlib-common:${pw.binom.Versions.KOTLIN_VERSION}")
             }
         }
-
+        val fallbackMain by creating{
+            dependsOn(commonMain)
+        }
+        dependsOn("jsMain", fallbackMain)
+        dependsOn("wasm32Main", fallbackMain)
+        dependsOn("wasmMain", fallbackMain)
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test-common"))
@@ -88,7 +112,6 @@ kotlin {
             }
         }
         ifNotMac {
-
             val jsTest by getting {
                 dependencies {
                     api(kotlin("test-js"))
