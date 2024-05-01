@@ -17,8 +17,14 @@ import kotlin.jvm.JvmInline
  */
 @JvmInline
 value class BitArray64(val value: Long = 0) : BitArray {
+    companion object {
+        val FULL = BitArray64(0xFFFFFFFFFFFFFFFFuL.toLong())
+    }
     override val size: Int
-        get() = MAX_BITS
+        get() = Long.SIZE_BITS
+
+    override val sizeInBytes: Int
+        get() = Long.SIZE_BYTES
 
     override fun fulled(value: Boolean, startIndex: Int, endIndex: Int): BitArray64 {
         if (startIndex == 0 && endIndex >= Long.SIZE_BITS - 1) {
@@ -29,6 +35,26 @@ value class BitArray64(val value: Long = 0) : BitArray {
             return BitArray64(numberValue)
         }
         return super.fulled(value, startIndex, endIndex) as BitArray64
+    }
+
+    override fun eachTrue(func: (Int) -> Boolean) {
+        var raw = value
+        for (i in 0 until size) {
+            if ((raw and 0x1L) != 0L) {
+                func(i)
+            }
+            raw = raw ushr 1
+        }
+    }
+
+    override fun eachFalse(func: (Int) -> Boolean) {
+        var raw = value
+        for (i in 0 until size) {
+            if ((raw and 0x1L) == 0L) {
+                func(i)
+            }
+            raw = raw ushr 1
+        }
     }
 
     override operator fun get(index: Int): Boolean = value[index] // value and (1L shl (MAX_BITS_1 - index)) != 0L

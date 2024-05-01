@@ -8,7 +8,6 @@ import kotlin.jvm.JvmInline
 
 @JvmInline
 value class BytesBitArray(val data: ByteArray) : MutableBitArray {
-
     /**
      * Size of array in bytes. For example `BytesBitArray(2)` creates BytesBitArray with 16 elements
      */
@@ -141,6 +140,9 @@ value class BytesBitArray(val data: ByteArray) : MutableBitArray {
     override val size
         get() = data.size * Byte.SIZE_BITS
 
+    override val sizeInBytes: Int
+        get() = data.size
+
     override fun toString(): String {
         val sb = StringBuilder(size)
         data.forEach { byte ->
@@ -202,6 +204,20 @@ value class BytesBitArray(val data: ByteArray) : MutableBitArray {
     override fun addAll(other: BitArray) = when (other) {
         is BytesBitArray -> addAll(other)
         else -> super.and(other)
+    }
+
+    override fun eachTrue(func: (Int) -> Boolean) {
+        data.forEachIndexed { index, byte ->
+            if (byte != 0.toByte()) {
+                var raw = byte.toInt()
+                for (i in 0 until Byte.SIZE_BITS) {
+                    if ((raw and 0x1) != 0) {
+                        func(i + index * Byte.SIZE_BITS)
+                    }
+                    raw = raw ushr 1
+                }
+            }
+        }
     }
 
     fun toLongsBitArray(): LongsBitArray {

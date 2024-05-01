@@ -22,7 +22,10 @@ import kotlin.jvm.JvmInline
 @JvmInline
 value class BitArray8(val value: Byte = 0) : BitArray {
     override val size: Int
-        get() = 8
+        get() = Byte.SIZE_BITS
+
+    override val sizeInBytes: Int
+        get() = Byte.SIZE_BYTES
 
     override fun fulled(value: Boolean, startIndex: Int, endIndex: Int): BitArray16 {
         if (startIndex == 0 && endIndex >= Short.SIZE_BITS - 1) {
@@ -77,6 +80,26 @@ value class BitArray8(val value: Byte = 0) : BitArray {
         val rightPart = (this.value shl (index + 4)) ushr (index + 4)
         val valueInt = (value and 0xF) shl (MAX_BITS - 4 - index)
         return BitArray8(leftPart or valueInt or rightPart)
+    }
+
+    override fun eachTrue(func: (Int) -> Boolean) {
+        var raw = value.toInt()
+        for (i in 0 until size) {
+            if ((raw and 0x1) != 0) {
+                func(i)
+            }
+            raw = raw ushr 1
+        }
+    }
+
+    override fun eachFalse(func: (Int) -> Boolean) {
+        var raw = value.toInt()
+        for (i in 0 until size) {
+            if ((raw and 0x1) == 0) {
+                func(i)
+            }
+            raw = raw ushr 1
+        }
     }
 
     override fun getByte8(index: Int): Byte = ((value ushr (size - 8 - index)) and 0xFF.toByte()).toByte()

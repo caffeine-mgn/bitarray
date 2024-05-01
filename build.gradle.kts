@@ -1,7 +1,6 @@
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 import pw.binom.publish.dependsOn
-import pw.binom.publish.ifNotMac
 import pw.binom.publish.propertyOrNull
 import pw.binom.publish.useDefault
 
@@ -23,7 +22,7 @@ fun KotlinMultiplatformExtension.eachNative(func: KotlinNativeTarget.() -> Unit)
 allprojects {
 //    val branch = getGitBranch()
     version = System.getenv("GITHUB_REF_NAME") ?: propertyOrNull("version")?.takeIf { it != "unspecified" }
-        ?: "1.0.0-SNAPSHOT"
+            ?: "1.0.0-SNAPSHOT"
     group = "pw.binom"
 
     repositories {
@@ -37,7 +36,6 @@ kotlin {
     macosX64()
     macosArm64()
     ios()
-    iosArm32()
     iosArm64()
     iosSimulatorArm64()
     watchos()
@@ -45,43 +43,35 @@ kotlin {
     watchosArm64()
     watchosSimulatorArm64()
     watchosX64()
-    watchosX86()
     jvm()
-    ifNotMac {
-        linuxX64()
-        linuxArm32Hfp()
-        linuxArm64()
-        linuxMips32()
-        linuxMipsel32()
-        mingwX64()
-        mingwX86()
-        androidNativeArm32()
-        androidNativeArm64()
-        androidNativeX86()
-        androidNativeX64()
-        wasm32()
-        wasm {
-            browser()
-            binaries.executable()
-        }
-        if (jsRun) {
-            js("js") {
-                browser {
-                    testTask {
-                        useKarma {
-                            useFirefox()
+    linuxX64()
+    linuxArm64()
+    mingwX64()
+    androidNativeArm32()
+    androidNativeArm64()
+    androidNativeX86()
+    androidNativeX64()
+    wasm {
+        browser()
+        binaries.executable()
+    }
+    if (jsRun) {
+        js("js") {
+            browser {
+                testTask {
+                    useKarma {
+                        useFirefox()
 //                        useFirefoxHeadless()
 //                        useChromium()
-                        }
                     }
                 }
-                binaries.executable()
             }
-        } else {
-            js(IR) {
-                browser()
-                nodejs()
-            }
+            binaries.executable()
+        }
+    } else {
+        js(IR) {
+            browser()
+            nodejs()
         }
     }
     eachNative {
@@ -99,7 +89,7 @@ kotlin {
                 api("org.jetbrains.kotlin:kotlin-stdlib-common:${pw.binom.Versions.KOTLIN_VERSION}")
             }
         }
-        val fallbackMain by creating{
+        val fallbackMain by creating {
             dependsOn(commonMain)
         }
         dependsOn("jsMain", fallbackMain)
@@ -111,17 +101,15 @@ kotlin {
                 implementation(kotlin("test-annotations-common"))
             }
         }
-        ifNotMac {
-            val jsTest by getting {
-                dependencies {
-                    api(kotlin("test-js"))
-                }
+        val jsTest by getting {
+            dependencies {
+                api(kotlin("test-js"))
             }
+        }
 
-            val jvmTest by getting {
-                dependencies {
-                    api(kotlin("test-junit"))
-                }
+        val jvmTest by getting {
+            dependencies {
+                api(kotlin("test-junit"))
             }
         }
         useDefault()

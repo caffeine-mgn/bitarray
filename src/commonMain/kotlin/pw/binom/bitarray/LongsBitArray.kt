@@ -5,6 +5,9 @@ import kotlin.jvm.JvmInline
 @JvmInline
 value class LongsBitArray(val data: LongArray) : MutableBitArray {
 
+    override val sizeInBytes: Int
+        get() = data.size * Long.SIZE_BYTES
+
     /**
      * Size of array in bytes. For example `LongsBitArray(2)` creates BytesBitArray with 128 elements
      */
@@ -115,6 +118,20 @@ value class LongsBitArray(val data: LongArray) : MutableBitArray {
     override fun addAll(other: BitArray) = when (other) {
         is LongsBitArray -> addAll(other)
         else -> super.and(other)
+    }
+
+    override fun eachTrue(func: (Int) -> Boolean) {
+        data.forEachIndexed { index, l ->
+            if (l != 0L) {
+                var raw = l
+                for (i in 0 until Long.SIZE_BITS) {
+                    if ((raw and 0x1L) != 0L) {
+                        func(i + index * Long.SIZE_BITS)
+                    }
+                    raw = raw ushr 1
+                }
+            }
+        }
     }
 
     fun toBytesBitArray(): BytesBitArray {

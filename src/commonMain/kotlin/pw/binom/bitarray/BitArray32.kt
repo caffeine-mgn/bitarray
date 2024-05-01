@@ -18,7 +18,10 @@ import kotlin.jvm.JvmInline
 @JvmInline
 value class BitArray32(val value: Int = 0) : BitArray {
     override val size: Int
-        get() = 32
+        get() = Int.SIZE_BITS
+
+    override val sizeInBytes: Int
+        get() = Int.SIZE_BYTES
 
     override fun fulled(value: Boolean, startIndex: Int, endIndex: Int): BitArray32 {
         if (startIndex == 0 && endIndex >= Int.SIZE_BITS - 1) {
@@ -35,6 +38,26 @@ value class BitArray32(val value: Int = 0) : BitArray {
 
     override fun isEmpty(): Boolean = false
     override fun copy() = BitArray32(value)
+
+    override fun eachTrue(func: (Int) -> Boolean) {
+        var raw = value
+        for (i in 0 until size) {
+            if ((raw and 0x1) != 0) {
+                func(i)
+            }
+            raw = raw ushr 1
+        }
+    }
+
+    override fun eachFalse(func: (Int) -> Boolean) {
+        var raw = value
+        for (i in 0 until size) {
+            if ((raw and 0x1) == 0) {
+                func(i)
+            }
+            raw = raw ushr 1
+        }
+    }
 
     override fun update(index: Int, value: Boolean) = BitArray32(
         if (value) {

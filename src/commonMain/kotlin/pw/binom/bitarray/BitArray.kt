@@ -3,6 +3,8 @@ package pw.binom.bitarray
 import kotlin.experimental.or
 
 sealed interface BitArray : Iterable<Boolean>, RandomAccess, List<Boolean> {
+    val sizeInBytes: Int
+
     //    val size: Int
     val lastIndex: Int
         get() = size - 1
@@ -177,4 +179,20 @@ sealed interface BitArray : Iterable<Boolean>, RandomAccess, List<Boolean> {
         sizeProvider = { this@BitArray.size },
         dataProvider = { this@BitArray[it] },
     )
+
+    fun eachTrue(func: (Int) -> Boolean) {
+        forEachIndexed { index, b ->
+            if (b) {
+                func(index)
+            }
+        }
+    }
+
+    fun eachFalse(func: (Int) -> Boolean) {
+        forEachIndexed { index, b ->
+            if (!b) {
+                func(index)
+            }
+        }
+    }
 }
