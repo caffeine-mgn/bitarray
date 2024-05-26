@@ -1,8 +1,10 @@
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
+import pw.binom.publish.allTargets
+import pw.binom.publish.applyDefaultHierarchyBinomTemplate
 import pw.binom.publish.dependsOn
 import pw.binom.publish.propertyOrNull
-import pw.binom.publish.useDefault
+//import pw.binom.publish.useDefault
 
 plugins {
     id("org.jetbrains.kotlin.multiplatform")
@@ -33,20 +35,21 @@ allprojects {
 }
 
 kotlin {
-    macosX64()
-    macosArm64()
-    ios()
-    iosArm64()
-    iosSimulatorArm64()
-    watchos()
-    watchosArm32()
-    watchosArm64()
-    watchosSimulatorArm64()
-    watchosX64()
-    tvos()
-    tvosArm64()
-    tvosSimulatorArm64()
-    tvosX64()
+//    macosX64()
+//    macosArm64()
+//    ios()
+//    iosArm64()
+//    iosSimulatorArm64()
+//    watchos()
+//    watchosArm32()
+//    watchosArm64()
+//    watchosSimulatorArm64()
+//    watchosX64()
+//    tvos()
+//    tvosArm64()
+//    tvosSimulatorArm64()
+//    tvosX64()
+    /*
     jvm()
     linuxX64()
     linuxArm64()
@@ -78,6 +81,7 @@ kotlin {
             nodejs()
         }
     }
+    */
     eachNative {
         compilations["main"].cinterops {
             create("bitarrayNative") {
@@ -86,6 +90,11 @@ kotlin {
             }
         }
     }
+    wasmJs()
+    wasmWasi()
+    allTargets()
+//    applyDefaultHierarchyTemplate()
+    applyDefaultHierarchyBinomTemplate()
     sourceSets {
         val commonMain by getting {
             dependencies {
@@ -97,8 +106,8 @@ kotlin {
             dependsOn(commonMain)
         }
         dependsOn("jsMain", fallbackMain)
-        dependsOn("wasm32Main", fallbackMain)
-        dependsOn("wasmMain", fallbackMain)
+//        dependsOn("wasm32Main", fallbackMain)
+        dependsOn("wasm*Main", fallbackMain)
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test-common"))
@@ -116,7 +125,15 @@ kotlin {
                 api(kotlin("test-junit"))
             }
         }
-        useDefault()
+        val nativeCommonMain by creating {
+            dependsOn(nativeMain.get())
+        }
+        val nativeRunnableMain by creating {
+            dependsOn(nativeCommonMain)
+
+        }
+//        dependsOn("androidNative*",nativeRunnableMain)
+        //useDefault()
     }
 }
 apply<pw.binom.publish.plugins.PrepareProject>()
