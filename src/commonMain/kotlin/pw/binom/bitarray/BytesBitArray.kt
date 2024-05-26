@@ -225,22 +225,6 @@ value class BytesBitArray(val data: ByteArray) : MutableBitArray {
         val validSize = if (other == 0) data.size else data.size - other + Long.SIZE_BYTES
         require(other == 0) { "Size of BytesBitArray should be $validSize" }
         return LongsBitArray(NativeUtils.byteArrayToLongArray(data))
-        val ret = LongArray(validSize / Long.SIZE_BYTES)
-        var cursorInLong = 0
-        while (cursorInLong * Long.SIZE_BYTES < data.size) {
-            val cursorInBytes = cursorInLong * Long.SIZE_BYTES
-            ret[cursorInLong++] = Long.fromBytes(
-                byte0 = data[cursorInBytes + 0],
-                byte1 = data[cursorInBytes + 1],
-                byte2 = data[cursorInBytes + 2],
-                byte3 = data[cursorInBytes + 3],
-                byte4 = data[cursorInBytes + 4],
-                byte5 = data[cursorInBytes + 5],
-                byte6 = data[cursorInBytes + 6],
-                byte7 = data[cursorInBytes + 7],
-            )
-        }
-        return LongsBitArray(ret)
     }
 }
 

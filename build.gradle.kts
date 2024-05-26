@@ -82,6 +82,12 @@ kotlin {
         }
     }
     */
+
+    wasmJs()
+    wasmWasi()
+    allTargets()
+//    applyDefaultHierarchyTemplate()
+    applyDefaultHierarchyBinomTemplate()
     eachNative {
         compilations["main"].cinterops {
             create("bitarrayNative") {
@@ -90,11 +96,6 @@ kotlin {
             }
         }
     }
-    wasmJs()
-    wasmWasi()
-    allTargets()
-//    applyDefaultHierarchyTemplate()
-    applyDefaultHierarchyBinomTemplate()
     sourceSets {
         val commonMain by getting {
             dependencies {
@@ -130,9 +131,11 @@ kotlin {
         }
         val nativeRunnableMain by creating {
             dependsOn(nativeCommonMain)
+        }
+        nativeMain.dependencies {
 
         }
-//        dependsOn("androidNative*",nativeRunnableMain)
+        dependsOn("androidNative*",nativeRunnableMain)
         //useDefault()
     }
 }

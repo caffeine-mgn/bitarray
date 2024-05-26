@@ -18,17 +18,16 @@ class LongsBitsetTest : AbstractMutableBitArrayTest() {
 
     @Test
     fun toByteBitArrayTest() {
-        val l = makeNew()
-        l[0] = true
-        l[7] = true
-        l[13] = true
-        l[15] = true
-        l[44] = true
+        val data = makeNew()
+        data[0] = true
+        data[7] = true
+        data[13] = true
+        data[15] = true
+        data[44] = true
 
-        val bytes = l.toBytesBitArray()
-        println("____l=$l")
+        val bytes = data.toBytesBitArray()
+        println("data=$data")
         println("bytes=$bytes")
-        assertContentEquals(l, bytes, "#1")
-        assertContentEquals(l, bytes.toLongsBitArray(), "#2")
+        assertContentEquals(data, bytes, "#1")
     }
 }

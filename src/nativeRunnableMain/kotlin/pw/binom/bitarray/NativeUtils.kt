@@ -1,5 +1,5 @@
 package pw.binom.bitarray
-
+/*
 import kotlinx.cinterop.addressOf
 import kotlinx.cinterop.convert
 import kotlinx.cinterop.reinterpret
@@ -38,3 +38,4 @@ internal actual object NativeUtils {
         return output
     }
 }
+*/
