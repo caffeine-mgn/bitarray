@@ -43,7 +43,7 @@ value class LongsBitArray(val data: LongArray) : MutableBitArray {
                 clear()
             }
         } else {
-            super.full(value, startIndex, endIndex)
+            super.full(value = value, startIndex = startIndex, endIndex = endIndex)
         }
     }
 
