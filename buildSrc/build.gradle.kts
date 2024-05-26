@@ -25,7 +25,7 @@ repositories {
 dependencies {
     api("org.jetbrains.kotlin:kotlin-stdlib:1.9.24")
     api("org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.24")
-    api("org.jetbrains.dokka:dokka-gradle-plugin:1.8.10")
+    api("org.jetbrains.dokka:dokka-gradle-plugin:1.9.10")
     api("pw.binom:binom-publish:0.1.19")
 }
 
