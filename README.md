@@ -1,26 +1,28 @@
 # BitArray
 
 [![GitHub license](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg?style=flat)](http://www.apache.org/licenses/LICENSE-2.0)
-[![Kotlin 1.8.21](https://img.shields.io/badge/Kotlin-1.8.21-blue.svg?style=flat&logo=kotlin)](http://kotlinlang.org)
+[![Kotlin 1.9.24](https://img.shields.io/badge/Kotlin-1.9.24-blue.svg?style=flat&logo=kotlin)](http://kotlinlang.org)
 [![Gradle build](https://github.com/caffeine-mgn/bitarray/actions/workflows/publish.yml/badge.svg) ](https://github.com/caffeine-mgn/bitarray/actions/workflows/publish.yml) <br><br>
 
 ### Description
 BitArray for Kotlin Common Library contains:
 
-* [BitArray8](src/commonMain/kotlin/pw/binom/BitArray8.kt) based in `Byte`
-* [BitArray16](src/commonMain/kotlin/pw/binom/BitArray16.kt) based in `Short`
-* [BitArray32](src/commonMain/kotlin/pw/binom/BitArray32.kt) based in `Int`
-* [BitArray64](src/commonMain/kotlin/pw/binom/BitArray64.kt) based on `Long`
-* [BytesBitArray](src/commonMain/kotlin/pw/binom/BytesBitArray.kt) based on `ByteArray`
-* [LongsBitArray](src/commonMain/kotlin/pw/binom/LongsBitArray.kt) based on `LongArray`
+* [BitArray8](src/commonMain/kotlin/pw/binom/bitarray/BitArray8.kt) based in `Byte`
+* [BitArray16](src/commonMain/kotlin/pw/binom/bitarray/BitArray16.kt) based in `Short`
+* [BitArray32](src/commonMain/kotlin/pw/binom/bitarray/BitArray32.kt) based in `Int`
+* [BitArray64](src/commonMain/kotlin/pw/binom/bitarray/BitArray64.kt) based on `Long`
+* [BytesBitArray](src/commonMain/kotlin/pw/binom/bitarray/BytesBitArray.kt) based on `ByteArray`
+* [ShortsBitArray](src/commonMain/kotlin/pw/binom/bitarray/ShortsBitArray.kt) based on `ShortArray`
+* [IntsBitArray](src/commonMain/kotlin/pw/binom/bitarray/IntsBitArray.kt) based on `IntArray`
+* [LongsBitArray](src/commonMain/kotlin/pw/binom/bitarray/LongsBitArray.kt) based on `LongArray`
 
-All classes implements [BitArray](src/commonMain/kotlin/pw/binom/BitArray.kt). All classes is `value class`.
+All classes implements [BitArray](src/commonMain/kotlin/pw/binom/bitarray/BitArray.kt). All classes is `value class`.
 
 ### Integration
 #### Gradle
 ```kotlin
 dependencies {
-    implementation("pw.binom:bitarray:0.2.1")
+    implementation("pw.binom:bitarray:0.2.8")
 }
 ```
 
