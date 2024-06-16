@@ -125,9 +125,9 @@ value class BitArray8(val value: Byte = 0) : BitArray {
     }
 }
 
-private infix fun Short.shl(i: Int) = (toInt() shl i).toShort()
-private infix fun Short.shr(i: Int) = (toInt() shr i).toShort()
-private infix fun Short.ushr(i: Int) = (toInt() ushr i).toShort()
+//private infix fun Short.shl(i: Int) = (toInt() shl i).toShort()
+//private infix fun Short.shr(i: Int) = (toInt() shr i).toShort()
+//private infix fun Short.ushr(i: Int) = (toInt() ushr i).toShort()
 
 fun Byte.toBitset() = BitArray8(this)
 

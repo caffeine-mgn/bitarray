@@ -125,9 +125,9 @@ value class BitArray16(val value: Short = 0) : BitArray {
     }
 }
 
-private infix fun Short.shl(i: Int) = (toInt() shl i).toShort()
+//private infix fun Short.shl(i: Int) = (toInt() shl i).toShort()
 private infix fun Short.shr(i: Int) = (toInt() shr i).toShort()
-private infix fun Short.ushr(i: Int) = (toInt() ushr i).toShort()
+//private infix fun Short.ushr(i: Int) = (toInt() ushr i).toShort()
 
 fun Short.toBitset() = BitArray16(this)
 
@@ -135,17 +135,17 @@ fun Short.toBitset() = BitArray16(this)
  * Returns short as bit set string. Example:
  * value = 0b00110100, result=00000000000000000000000000110100
  */
-private fun Short.toBitsetString(): String {
-    val leftPart = toUShort().toString(2)
-    var len = MAX_BITS - leftPart.length
-    val sb = StringBuilder()
-    while (len > 0) {
-        len--
-        sb.append("0")
-    }
-    sb.append(leftPart)
-    return sb.toString()
-}
+//internal fun Short.toBitsetString(): String {
+//    val leftPart = toUShort().toString(2)
+//    var len = MAX_BITS - leftPart.length
+//    val sb = StringBuilder()
+//    while (len > 0) {
+//        len--
+//        sb.append("0")
+//    }
+//    sb.append(leftPart)
+//    return sb.toString()
+//}
 
 private const val MAX_BITS = Short.SIZE_BITS
 private const val MAX_BITS_1 = MAX_BITS - 1
