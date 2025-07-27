@@ -107,17 +107,17 @@ value class LongsBitArray(val data: LongArray) : MutableBitArray {
 
     override fun or(other: BitArray) = when (other) {
         is LongsBitArray -> or(other)
-        else -> super.and(other)
+        else -> super.or(other)
     }
 
     override fun xor(other: BitArray) = when (other) {
         is LongsBitArray -> xor(other)
-        else -> super.and(other)
+        else -> super.xor(other)
     }
 
     override fun addAll(other: BitArray) = when (other) {
         is LongsBitArray -> addAll(other)
-        else -> super.and(other)
+        else -> super.addAll(other)
     }
 
     override fun eachTrue(func: (Int) -> Boolean) {

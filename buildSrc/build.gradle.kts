@@ -7,12 +7,12 @@ buildscript {
     }
 
     dependencies {
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.24")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:2.2.0")
     }
 }
 
 plugins {
-    kotlin("jvm") version "1.9.24"
+    kotlin("jvm") version "2.2.0"
 }
 
 repositories {
@@ -23,8 +23,8 @@ repositories {
 }
 
 dependencies {
-    api("org.jetbrains.kotlin:kotlin-stdlib:1.9.24")
-    api("org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.24")
+    api("org.jetbrains.kotlin:kotlin-stdlib:2.2.0")
+    api("org.jetbrains.kotlin:kotlin-gradle-plugin:2.2.0")
     api("pw.binom:binom-publish:0.1.20")
 }
 
