@@ -7,8 +7,9 @@ import pw.binom.publish.propertyOrNull
 //import pw.binom.publish.useDefault
 
 plugins {
-    id("org.jetbrains.kotlin.multiplatform")
     id("maven-publish")
+    alias(libs.plugins.kotlin.multiplatform)
+    alias(libs.plugins.binom.publish)
 }
 
 val jsRun = System.getProperty("jsrun") != null
@@ -85,7 +86,9 @@ kotlin {
 
     wasmJs()
     wasmWasi()
-    allTargets()
+    allTargets{
+        -"wasmJs"
+    }
 //    applyDefaultHierarchyTemplate()
     applyDefaultHierarchyBinomTemplate()
     eachNative {
@@ -100,7 +103,8 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 api(kotlin("stdlib"))
-                api("org.jetbrains.kotlin:kotlin-stdlib-common:${pw.binom.Versions.KOTLIN_VERSION}")
+//                api("org.jetbrains.kotlin:kotlin-stdlib-common:${pw.binom.Versions.KOTLIN_VERSION}")
+                api(kotlin("stdlib-common"))
             }
         }
         val fallbackMain by creating {
@@ -139,4 +143,4 @@ kotlin {
         //useDefault()
     }
 }
-apply<pw.binom.publish.plugins.PrepareProject>()
+//apply<pw.binom.publish.plugins.PrepareProject>()

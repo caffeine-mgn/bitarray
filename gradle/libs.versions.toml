@@ -1,0 +1,13 @@
+[versions]
+kotlin = "2.2.0"
+binom-publish = "0.1.24"
+
+[libraries]
+[plugins]
+
+kotlin-noarg = { id = "org.jetbrains.kotlin:kotlin-noarg", version.ref = "kotlin" }
+kotlin-spring = { id = "kotlin-spring", version.ref = "kotlin" }
+kotlin-allopen = { id = "org.jetbrains.kotlin:kotlin-allopen", version.ref = "kotlin" }
+spring-boot = { id = "org.springframework.boot", version = "3.3.1" }
+kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+binom-publish = { id = "pw.binom.publish", version.ref = "binom-publish" }
