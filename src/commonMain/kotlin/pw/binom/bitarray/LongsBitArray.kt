@@ -120,7 +120,7 @@ value class LongsBitArray(val data: LongArray) : MutableBitArray {
         else -> super.addAll(other)
     }
 
-    override fun eachTrue(func: (Int) -> Boolean) {
+    override fun eachTrue(func: (Int) -> Unit) {
         data.forEachIndexed { index, l ->
             if (l != 0L) {
                 var raw = l

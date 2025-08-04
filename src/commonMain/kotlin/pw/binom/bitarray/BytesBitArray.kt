@@ -206,7 +206,7 @@ value class BytesBitArray(val data: ByteArray) : MutableBitArray {
         else -> super.and(other)
     }
 
-    override fun eachTrue(func: (Int) -> Boolean) {
+    override fun eachTrue(func: (Int) -> Unit) {
         data.forEachIndexed { index, byte ->
             if (byte != 0.toByte()) {
                 var raw = byte.toInt()

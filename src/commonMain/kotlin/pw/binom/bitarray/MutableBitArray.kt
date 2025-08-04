@@ -5,7 +5,7 @@ interface MutableBitArray : BitArray {
     operator fun set(index: Int, value: Boolean)
 
     /**
-     * Sets [value] to all indexes betweeb [startIndex] and [endIndex] in this array
+     * Sets [value] to all indexes between [startIndex] and [endIndex] in this array
      */
     fun full(value: Boolean, startIndex: Int, endIndex: Int) {
         for (i in startIndex..endIndex) {

@@ -27,15 +27,15 @@ value class BitArray8(val value: Byte = 0) : BitArray {
     override val sizeInBytes: Int
         get() = Byte.SIZE_BYTES
 
-    override fun fulled(value: Boolean, startIndex: Int, endIndex: Int): BitArray16 {
-        if (startIndex == 0 && endIndex >= Short.SIZE_BITS - 1) {
+    override fun fulled(value: Boolean, startIndex: Int, endIndex: Int): BitArray8 {
+        if (startIndex == 0 && endIndex >= Byte.SIZE_BITS - 1) {
             val numberValue = when (value) {
-                true -> 0xFFFFu.toShort()
+                true -> 0xFFFFu.toByte()
                 false -> 0
             }
-            return BitArray16(numberValue)
+            return BitArray8(numberValue)
         }
-        return super.fulled(value, startIndex, endIndex) as BitArray16
+        return super.fulled(value, startIndex, endIndex) as BitArray8
     }
 
     override operator fun get(index: Int): Boolean {
@@ -82,7 +82,7 @@ value class BitArray8(val value: Byte = 0) : BitArray {
         return BitArray8(leftPart or valueInt or rightPart)
     }
 
-    override fun eachTrue(func: (Int) -> Boolean) {
+    override fun eachTrue(func: (Int) -> Unit) {
         var raw = value.toInt()
         for (i in 0 until size) {
             if ((raw and 0x1) != 0) {
@@ -92,7 +92,7 @@ value class BitArray8(val value: Byte = 0) : BitArray {
         }
     }
 
-    override fun eachFalse(func: (Int) -> Boolean) {
+    override fun eachFalse(func: (Int) -> Unit) {
         var raw = value.toInt()
         for (i in 0 until size) {
             if ((raw and 0x1) == 0) {
@@ -110,17 +110,17 @@ value class BitArray8(val value: Byte = 0) : BitArray {
     override fun toString(): String = value.toBitsetString()
 
     override fun and(other: BitArray): BitArray = when (other) {
-        is BitArray16 -> and(other)
+        is BitArray8 -> and(other)
         else -> super.and(other)
     }
 
     override fun or(other: BitArray): BitArray = when (other) {
-        is BitArray16 -> or(other)
+        is BitArray8 -> or(other)
         else -> super.and(other)
     }
 
     override fun xor(other: BitArray): BitArray = when (other) {
-        is BitArray16 -> xor(other)
+        is BitArray8 -> xor(other)
         else -> super.and(other)
     }
 }

@@ -120,7 +120,7 @@ value class IntsBitArray(val data: IntArray) : MutableBitArray {
         else -> super.and(other)
     }
 
-    override fun eachTrue(func: (Int) -> Boolean) {
+    override fun eachTrue(func: (Int) -> Unit) {
         data.forEachIndexed { index, l ->
             if (l != 0) {
                 var raw = l

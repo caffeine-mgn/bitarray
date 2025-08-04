@@ -3,13 +3,24 @@ package pw.binom.bitarray
 import kotlin.experimental.or
 
 sealed interface BitArray : Iterable<Boolean>, RandomAccess, List<Boolean> {
+    /**
+     * Size of collection in bytes. For example [BitArray8] value of [sizeInBytes] is `1`.
+     * For [BitArray32] value of [sizeInBytes] is `4`
+     */
     val sizeInBytes: Int
 
-    //    val size: Int
     val lastIndex: Int
         get() = size - 1
 
-    //    operator fun get(index: Int): Boolean
+    /**
+     * Size of collection. For example [BitArray8] value of [size] is `8`.
+     * For [BitArray32] value of [sizeInBytes] is `32`
+     */
+    abstract override val size: Int
+
+    /**
+     * Makes copy of current array and returns it
+     */
     fun copy(): BitArray
     fun update(index: Int, value: Boolean): BitArray
     fun toBooleanArray() = BooleanArray(size) { this[it] }
@@ -58,11 +69,11 @@ sealed interface BitArray : Iterable<Boolean>, RandomAccess, List<Boolean> {
      * Creates new array, and then set [value] to all indexes betweeb [startIndex] and [endIndex]. Then return result
      */
     fun fulled(value: Boolean, startIndex: Int = 0, endIndex: Int = lastIndex): BitArray {
-        var e = this
+        var self = this
         for (i in startIndex..lastIndex) {
-            e = e.update(i, value)
+            self = self.update(i, value)
         }
-        return e
+        return self
     }
 
     /**
@@ -180,17 +191,17 @@ sealed interface BitArray : Iterable<Boolean>, RandomAccess, List<Boolean> {
         dataProvider = { this@BitArray[it] },
     )
 
-    fun eachTrue(func: (Int) -> Boolean) {
-        forEachIndexed { index, b ->
-            if (b) {
+    fun eachTrue(func: (Int) -> Unit) {
+        forEachIndexed { index, value ->
+            if (value) {
                 func(index)
             }
         }
     }
 
-    fun eachFalse(func: (Int) -> Boolean) {
-        forEachIndexed { index, b ->
-            if (!b) {
+    fun eachFalse(func: (Int) -> Unit) {
+        forEachIndexed { index, value ->
+            if (!value) {
                 func(index)
             }
         }

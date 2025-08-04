@@ -124,7 +124,7 @@ value class ShortsBitArray(val data: ShortArray) : MutableBitArray {
         else -> super.and(other)
     }
 
-    override fun eachTrue(func: (Int) -> Boolean) {
+    override fun eachTrue(func: (Int) -> Unit) {
         data.forEachIndexed { index, l ->
             if (l != 0.toShort()) {
                 var raw = l

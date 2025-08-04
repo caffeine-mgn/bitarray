@@ -46,7 +46,7 @@ value class BitArray16(val value: Short = 0) : BitArray {
     override fun isEmpty(): Boolean = false
     override fun copy() = BitArray16(value)
 
-    override fun eachTrue(func: (Int) -> Boolean) {
+    override fun eachTrue(func: (Int) -> Unit) {
         var raw = value.toInt()
         for (i in 0 until size) {
             if ((raw and 0x1) != 0) {
@@ -56,7 +56,7 @@ value class BitArray16(val value: Short = 0) : BitArray {
         }
     }
 
-    override fun eachFalse(func: (Int) -> Boolean) {
+    override fun eachFalse(func: (Int) -> Unit) {
         var raw = value.toInt()
         for (i in 0 until size) {
             if ((raw and 0x1) == 0) {

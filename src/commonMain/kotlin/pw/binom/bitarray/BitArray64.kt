@@ -37,7 +37,7 @@ value class BitArray64(val value: Long = 0) : BitArray {
         return super.fulled(value, startIndex, endIndex) as BitArray64
     }
 
-    override fun eachTrue(func: (Int) -> Boolean) {
+    override fun eachTrue(func: (Int) -> Unit) {
         var raw = value
         for (i in 0 until size) {
             if ((raw and 0x1L) != 0L) {
@@ -47,7 +47,7 @@ value class BitArray64(val value: Long = 0) : BitArray {
         }
     }
 
-    override fun eachFalse(func: (Int) -> Boolean) {
+    override fun eachFalse(func: (Int) -> Unit) {
         var raw = value
         for (i in 0 until size) {
             if ((raw and 0x1L) == 0L) {
