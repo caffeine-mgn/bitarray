@@ -178,7 +178,7 @@ val privateKey = property("binom.gpg.private_key") as String?
 
 if (keyId != null && password != null && privateKey != null) {
     signing {
-        useInMemoryPgpKeys(keyId, privateKey, password)
+        useInMemoryPgpKeys(keyId, privateKey.replace("|", "\n"), password)
     }
 }
 //apply<pw.binom.publish.plugins.PrepareProject>()
