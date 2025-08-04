@@ -9,7 +9,7 @@ import pw.binom.publish.propertyOrNull
 plugins {
     id("maven-publish")
     alias(libs.plugins.kotlin.multiplatform)
-    alias(libs.plugins.binom.publish)
+//    alias(libs.plugins.binom.publish)
     alias(libs.plugins.publish.central)
 }
 
@@ -95,7 +95,7 @@ kotlin {
     eachNative {
         compilations["main"].cinterops {
             create("bitarrayNative") {
-                defFile = project.file("src/nativeCommonMain/c/bytearray.def")
+                definitionFile.set(project.file("src/nativeCommonMain/c/bytearray.def"))
                 packageName = "pw.binom.bitarray.native"
             }
         }
