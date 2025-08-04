@@ -1,8 +1,6 @@
 package pw.binom.bitarray
 
 import java.nio.ByteBuffer
-import java.nio.IntBuffer
-import java.nio.LongBuffer
 
 internal actual object NativeUtils {
     actual fun byteArrayToLongArray(src: ByteArray): LongArray {

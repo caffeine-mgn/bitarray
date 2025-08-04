@@ -1,3 +1,4 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 import pw.binom.publish.dependsOn
@@ -33,8 +34,15 @@ allprojects {
 }
 
 kotlin {
-    jvm()
-    js()
+    jvm {
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_1_8)
+        }
+    }
+    js {
+        browser()
+        nodejs()
+    }
     linuxX64()
     linuxArm64()
     mingwX64()
@@ -54,8 +62,13 @@ kotlin {
     androidNativeArm64()
     androidNativeX64()
     androidNativeX86()
-    wasmJs()
-    wasmWasi()
+    wasmJs {
+        browser()
+        nodejs()
+    }
+    wasmWasi {
+        nodejs()
+    }
 //    macosX64()
 //    macosArm64()
 //    ios()
@@ -179,6 +192,12 @@ val privateKey = property("binom.gpg.private_key") as String?
 if (keyId != null && password != null && privateKey != null) {
     signing {
         useInMemoryPgpKeys(keyId, privateKey.replace("|", "\n"), password)
+    }
+}
+tasks {
+    val singTasks = withType<Sign>()
+    withType<AbstractPublishToMaven>().all {
+        dependsOn(singTasks)
     }
 }
 //apply<pw.binom.publish.plugins.PrepareProject>()
