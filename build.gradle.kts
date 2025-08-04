@@ -172,4 +172,13 @@ publishOnCentral {
     scmConnection.set("scm:git:https://github.com/${repoOwner.get()}/${project.name}")
 }
 
+val keyId = property("binom.gpg.key_id") as String?
+val password = property("binom.gpg.password") as String?
+val privateKey = property("binom.gpg.private_key") as String?
+
+if (keyId != null && password != null && privateKey != null) {
+    signing {
+        useInMemoryPgpKeys(keyId, privateKey, password)
+    }
+}
 //apply<pw.binom.publish.plugins.PrepareProject>()
