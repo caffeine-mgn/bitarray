@@ -1,7 +1,10 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
+import pw.binom.publish.BINOM_REPO_PASSWORD_PROPERTY
+import pw.binom.publish.BINOM_REPO_USER_PROPERTY
 import pw.binom.publish.dependsOn
+import pw.binom.publish.stringProperty
 
 plugins {
     id("maven-publish")
@@ -185,13 +188,34 @@ publishOnCentral {
     scmConnection.set("scm:git:https://github.com/${repoOwner.get()}/${project.name}")
 }
 
-val keyId = property("binom.gpg.key_id") as String?
-val password = property("binom.gpg.password") as String?
-val privateKey = property("binom.gpg.private_key") as String?
+fun Project.propertyOrNull(property: String) =
+    if (hasProperty(property)) property(property) as String else null
+
+val keyId = propertyOrNull("binom.gpg.key_id")
+val password = propertyOrNull("binom.gpg.password")
+val privateKey = propertyOrNull("binom.gpg.private_key")
 
 if (keyId != null && password != null && privateKey != null) {
     signing {
         useInMemoryPgpKeys(keyId, privateKey.replace("|", "\n"), password)
+    }
+}
+
+val binomUser = propertyOrNull("binom.repo.user")
+val binomPassword = propertyOrNull("binom.repo.password")
+
+if (binomUser != null && binomPassword != null) {
+    publishing {
+        repositories {
+            maven {
+                name = "Binom"
+                url = uri("https://repo.binom.pw")
+                credentials {
+                    username = binomUser
+                    password = binomPassword
+                }
+            }
+        }
     }
 }
 tasks {
