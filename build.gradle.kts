@@ -10,6 +10,7 @@ plugins {
     id("maven-publish")
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.binom.publish)
+    alias(libs.plugins.publish.central)
 }
 
 val jsRun = System.getProperty("jsrun") != null
@@ -143,4 +144,14 @@ kotlin {
         //useDefault()
     }
 }
+
+publishOnCentral {
+    repoOwner.set("caffeine-mgn")
+    projectLongName.set(project.name)
+    licenseName.set("Apache License, Version 2.0")
+    licenseUrl.set("http://www.apache.org/licenses/LICENSE-2.0")
+    projectUrl.set("https://github.com/${repoOwner.get()}/${project.name}")
+    scmConnection.set("scm:git:https://github.com/${repoOwner.get()}/${project.name}")
+}
+
 //apply<pw.binom.publish.plugins.PrepareProject>()

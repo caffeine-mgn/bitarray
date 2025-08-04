@@ -1,6 +1,6 @@
 [versions]
 kotlin = "2.2.0"
-binom-publish = "0.1.24"
+binom-publish = "0.1.25"
 
 [libraries]
 [plugins]
@@ -11,3 +11,4 @@ kotlin-allopen = { id = "org.jetbrains.kotlin:kotlin-allopen", version.ref = "ko
 spring-boot = { id = "org.springframework.boot", version = "3.3.1" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 binom-publish = { id = "pw.binom.publish", version.ref = "binom-publish" }
+publish-central = { id = "org.danilopianini.publish-on-central", version = "9.1.0" }
