@@ -1,15 +1,11 @@
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
-import pw.binom.publish.allTargets
-import pw.binom.publish.applyDefaultHierarchyBinomTemplate
 import pw.binom.publish.dependsOn
-import pw.binom.publish.propertyOrNull
-//import pw.binom.publish.useDefault
 
 plugins {
     id("maven-publish")
     alias(libs.plugins.kotlin.multiplatform)
-//    alias(libs.plugins.binom.publish)
+    alias(libs.plugins.binom.publish) apply false
     alias(libs.plugins.publish.central)
 }
 
@@ -25,7 +21,7 @@ fun KotlinMultiplatformExtension.eachNative(func: KotlinNativeTarget.() -> Unit)
 
 allprojects {
 //    val branch = getGitBranch()
-    version = System.getenv("GITHUB_REF_NAME") ?: propertyOrNull("version")?.takeIf { it != "unspecified" }
+    version = System.getenv("GITHUB_REF_NAME") ?: (property("version") as String?)?.takeIf { it != "unspecified" }
             ?: "1.0.0-SNAPSHOT"
     group = "pw.binom"
 
@@ -37,6 +33,29 @@ allprojects {
 }
 
 kotlin {
+    jvm()
+    js()
+    linuxX64()
+    linuxArm64()
+    mingwX64()
+    macosX64()
+    macosArm64()
+    iosX64()
+    iosArm64()
+    iosSimulatorArm64()
+    watchosX64()
+    watchosArm32()
+    watchosDeviceArm64()
+    watchosSimulatorArm64()
+    tvosX64()
+    tvosArm64()
+    tvosSimulatorArm64()
+    androidNativeArm32()
+    androidNativeArm64()
+    androidNativeX64()
+    androidNativeX86()
+    wasmJs()
+    wasmWasi()
 //    macosX64()
 //    macosArm64()
 //    ios()
@@ -85,13 +104,12 @@ kotlin {
     }
     */
 
-    wasmJs()
-    wasmWasi()
-    allTargets{
-        -"wasmJs"
-    }
+//    allTargets{
+//        -"wasmJs"
+//    }
 //    applyDefaultHierarchyTemplate()
-    applyDefaultHierarchyBinomTemplate()
+//    applyDefaultHierarchyBinomTemplate()
+    applyDefaultHierarchyTemplate()
     eachNative {
         compilations["main"].cinterops {
             create("bitarrayNative") {
@@ -140,7 +158,7 @@ kotlin {
         nativeMain.dependencies {
 
         }
-        dependsOn("androidNative*",nativeRunnableMain)
+        dependsOn("androidNative*", nativeRunnableMain)
         //useDefault()
     }
 }
