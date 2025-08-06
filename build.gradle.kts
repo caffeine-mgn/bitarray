@@ -223,5 +223,9 @@ tasks {
     withType<AbstractPublishToMaven>().all {
         dependsOn(singTasks)
     }
+    val releaseMavenCentralPortalPublication by getting
+    val zipMavenCentralPortalPublication by getting
+
+    releaseMavenCentralPortalPublication.dependsOn(zipMavenCentralPortalPublication)
 }
 //apply<pw.binom.publish.plugins.PrepareProject>()
