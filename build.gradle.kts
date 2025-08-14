@@ -26,7 +26,8 @@ fun KotlinMultiplatformExtension.eachNative(func: KotlinNativeTarget.() -> Unit)
 allprojects {
 //    val branch = getGitBranch()
     version = System.getenv("GITHUB_REF_NAME") ?: (property("version") as String?)?.takeIf { it != "unspecified" }
-            ?: "1.0.0-SNAPSHOT"
+//            ?: "1.0.0-SNAPSHOT"
+            ?: "0.2.12"
     group = "pw.binom"
 
     repositories {
@@ -37,6 +38,7 @@ allprojects {
 }
 
 kotlin {
+    withSourcesJar(publish = true)
     jvm {
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_1_8)
@@ -218,6 +220,39 @@ if (binomUser != null && binomPassword != null) {
         }
     }
 }
+
+val repoSlug = "caffeine-mgn/bitarray"
+val token = System.getenv("GITHUB_TOKEN")
+if (token != null) {
+    publishOnCentral {
+        if (project.description != null) {
+            projectDescription.set(project.description)
+        }
+//    projectLongName.set(extra["projectLongName"].toString())
+        projectUrl.set("https://github.com/$repoSlug")
+        licenseName.set("Apache-2.0 license")
+        licenseUrl.set(projectUrl.map { "$it/blob/main/LICENSE" })
+        scmConnection.set("git:git@github.com:$repoSlug.git")
+        repository("https://maven.pkg.github.com/${repoSlug.lowercase()}") {
+            user.set("caffeine-mgn")
+            password.set(System.getenv("GITHUB_TOKEN"))
+        }
+    }
+}
+
+publishing.publications.withType<MavenPublication>().configureEach {
+    pom {
+        developers {
+            developer {
+                name.set("Subochev Anton")
+                email.set("caffeine.mgn@gmail.com")
+                url.set("https://github.com/caffeine-mgn")
+                roles.set(mutableSetOf("architect", "developer"))
+            }
+        }
+    }
+}
+
 tasks {
     val singTasks = withType<Sign>()
     withType<AbstractPublishToMaven>().all {
